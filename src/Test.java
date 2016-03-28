@@ -16,8 +16,13 @@ public class Test {
 
         TranslationMatrix matrix1 = new TranslationMatrix(1, 2, 3);
         matrix1.PrintMatrix();
+        System.out.println();
         RotationMatrix matrix2 = new RotationMatrix(0, 0, 0, 0, 0, 1, 360);
         matrix2.PrintMatrix();
+        System.out.println();
+        ProjectionMatrix matrix3 = new ProjectionMatrix();
+        matrix3.PrintMatrix();
+        System.out.println();
     }
 
 }
