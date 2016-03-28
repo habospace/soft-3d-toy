@@ -14,9 +14,9 @@ public class RotationMatrix extends TransformationMatrix  {
     }
 
     private void MakeMatrix(double a, double b,
-                                  double c, double uUn,
-                                  double vUn, double wUn,
-                                  double theta){
+                            double c, double uUn,
+                            double vUn, double wUn,
+                            double theta){
         double l = GetLength(uUn, vUn, wUn);
         double u = uUn/l;
         double v = vUn/l;

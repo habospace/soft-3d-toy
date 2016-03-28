@@ -9,8 +9,8 @@ public class TranslationMatrix extends TransformationMatrix {
     }
 
     private void MakeMatrix (double deltaX,
-                                          double deltaY,
-                                          double deltaZ){
+                             double deltaY,
+                             double deltaZ){
         for(int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
                 if (i == j){

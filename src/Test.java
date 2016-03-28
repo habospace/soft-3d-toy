@@ -41,7 +41,7 @@ public class Test {
         System.out.println();
         System.out.println();
 
-        Vector vector2 = new Vector(5, 5, 100);
+        Vector vector2 = new Vector(5, 5, 30);
         double[] multipliedvector2 = matrix3.Multiply(vector2);
         System.out.println();
         System.out.println();
