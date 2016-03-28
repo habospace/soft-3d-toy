@@ -3,11 +3,11 @@
  */
 public class Vector {
 
-    private int index = 1;
-    private double[] vector;
+    private static double index = 1;
+    private static final int vectorsize = 4;
+    private double[] vector = new double[vectorsize];
 
     public Vector (double x, double y, double z){
-        vector = new double[4];
         vector[0] = x;
         vector[1] = y;
         vector[2] = z;
@@ -18,6 +18,9 @@ public class Vector {
         return vector;
     }
 
-
-
+    public void PrintVector(){
+        for(int i = 0; i < vectorsize; i++){
+            System.out.print(vector[i]+" ");
+        }
+    }
 }

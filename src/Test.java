@@ -23,6 +23,21 @@ public class Test {
         ProjectionMatrix matrix3 = new ProjectionMatrix();
         matrix3.PrintMatrix();
         System.out.println();
-    }
+        System.out.println();
 
+        Vector vector = new Vector(0, 0, 0);
+        vector.PrintVector();
+        System.out.println();
+        System.out.println();
+
+        double[] multipliedvector = matrix1.Multiply(vector);
+        System.out.println();
+        System.out.println();
+        System.out.print(multipliedvector[0]+"; ");
+        System.out.print(multipliedvector[1]+"; ");
+        System.out.print(multipliedvector[2]+"; ");
+        System.out.print(multipliedvector[3]+"; ");
+        System.out.println();
+        System.out.println();
+    }
 }
