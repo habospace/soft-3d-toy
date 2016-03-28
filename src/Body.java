@@ -3,30 +3,26 @@
  */
 public class Body {
 
-    private String name;
     private Vector[] vertices;
-    private Vector position;
-    private Vector rotation;
     private int verticesCount;
 
-    public Body(String name, int verticesCount){
+    public Body(int verticesCount){
         this.verticesCount = verticesCount;
         this.vertices = new Vector[verticesCount];
-        this.name = name;
     }
 
     public void AddVertex(Vector vertex, int index){
         try {
-            this.vertices[index] = vertex;
+            vertices[index] = vertex;
         }
         catch (ArrayIndexOutOfBoundsException error){
             System.out.println("Exception thrown  :" + error);
         }
     }
 
-    public void MoveBody (VectorMultipliable matrix){
-        for(int i = 0; i < vertices.length; i++){
-            double[] updatedvertex = matrix.Multiply(this.vertices[i]);
+    public void Move(VectorMultipliable matrix){
+        for(int i = 0; i < verticesCount; i++){
+            vertices[i].UpdateVector(matrix.Multiply(vertices[i]));
         }
     }
 }

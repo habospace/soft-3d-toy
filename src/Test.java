@@ -5,7 +5,7 @@ import java.lang.Math;
 public class Test {
 
     public static void main (String[] args){
-        Body cube = new Body("Cube1", 8);
+        Body cube = new Body(8);
         cube.AddVertex(new Vector(-1, 1, 1), 0);
         cube.AddVertex(new Vector(1, 1, 1), 1);
         cube.AddVertex(new Vector(-1, -1, 1), 2);

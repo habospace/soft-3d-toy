@@ -4,7 +4,7 @@ import java.lang.Math;
  */
 public class ProjectionMatrix extends TransformationMatrix {
 
-    private static final double fovy = 0.785398;
+    private static final double fovy = Math.toRadians(45);
     private static final double aspect = 1;
     private static final double nearZ = 10;
     private static final double farZ = 100;
@@ -20,7 +20,6 @@ public class ProjectionMatrix extends TransformationMatrix {
             }
         }
         double frustumdepth = farZ - nearZ;
-        double recdepth = 1 / frustumdepth;
 
         matrix[1][1] = 1 / Math.tan(fovy / 2);
         matrix[0][0] = matrix[1][1] / aspect;
