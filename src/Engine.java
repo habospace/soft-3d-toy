@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Engine extends JPanel implements ActionListener {
-    
-    private Body cube= new Body();
+
+    //private Body cube= new Body();
     private static final int FrameHeight = 300;
     private static final int FrameWidth = 300;
     private static final int delay = 200;
