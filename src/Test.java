@@ -1,3 +1,4 @@
+import java.lang.Math;
 /**
  * Created by habospace on 25/03/16.
  */
@@ -25,19 +26,32 @@ public class Test {
         System.out.println();
         System.out.println();
 
-        Vector vector = new Vector(0, 0, 0);
-        vector.PrintVector();
+        Vector vector1 = new Vector(0, 0, 0);
+        vector1.PrintVector();
         System.out.println();
         System.out.println();
 
-        double[] multipliedvector = matrix1.Multiply(vector);
+        double[] multipliedvector1 = matrix1.Multiply(vector1);
         System.out.println();
         System.out.println();
-        System.out.print(multipliedvector[0]+"; ");
-        System.out.print(multipliedvector[1]+"; ");
-        System.out.print(multipliedvector[2]+"; ");
-        System.out.print(multipliedvector[3]+"; ");
+        System.out.print(multipliedvector1[0]+"; ");
+        System.out.print(multipliedvector1[1]+"; ");
+        System.out.print(multipliedvector1[2]+"; ");
+        System.out.print(multipliedvector1[3]+"; ");
         System.out.println();
         System.out.println();
+
+        Vector vector2 = new Vector(5, 5, 100);
+        double[] multipliedvector2 = matrix3.Multiply(vector2);
+        System.out.println();
+        System.out.println();
+        System.out.print(multipliedvector2[0]+"; ");
+        System.out.print(multipliedvector2[1]+"; ");
+        System.out.print(multipliedvector2[2]+"; ");
+        System.out.print(multipliedvector2[3]+"; ");
+        System.out.println();
+        System.out.println();
+
+        System.out.println(Math.toRadians(45));
     }
 }

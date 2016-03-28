@@ -26,7 +26,7 @@ public class Body {
 
     public void MoveBody (VectorMultipliable matrix){
         for(int i = 0; i < vertices.length; i++){
-            double[] currentvertex = vertices[i].GetVector();
+            double[] updatedvertex = matrix.Multiply(this.vertices[i]);
         }
     }
 }

@@ -4,10 +4,10 @@ import java.lang.Math;
  */
 public class ProjectionMatrix extends TransformationMatrix {
 
-    private static final double fovy = 0.349;
-    private static final double aspect = 2.00/3.00;
-    private static final double nearZ = 274.74;
-    private static final double farZ = nearZ*5;
+    private static final double fovy = 0.785398;
+    private static final double aspect = 1;
+    private static final double nearZ = 10;
+    private static final double farZ = 100;
 
     public ProjectionMatrix (){
         MakeMatrix();
@@ -22,10 +22,10 @@ public class ProjectionMatrix extends TransformationMatrix {
         double frustumdepth = farZ - nearZ;
         double recdepth = 1 / frustumdepth;
 
-        matrix[1][1] = 1/Math.tan(fovy/2);
-        matrix[0][0] = matrix[1][1]/aspect;
-        matrix[2][2] = farZ * recdepth;
-        matrix[3][2] = (-farZ * nearZ) * recdepth;
-        matrix[2][3] = 1;
+        matrix[1][1] = 1 / Math.tan(fovy / 2);
+        matrix[0][0] = matrix[1][1] / aspect;
+        matrix[2][2] = -(farZ + nearZ) / (farZ - nearZ);
+        matrix[2][3] = (2 * farZ * nearZ) / (farZ - nearZ);
+        matrix[3][2] = 1;
     }
 }
