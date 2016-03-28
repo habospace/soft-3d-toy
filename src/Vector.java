@@ -3,15 +3,21 @@
  */
 public class Vector {
 
-    private int x;
-    private int y;
-    private int z;
+    private int index = 1;
+    private double[] vector;
 
-    public Vector (int x, int y, int z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Vector (double x, double y, double z){
+        vector = new double[4];
+        vector[0] = x;
+        vector[1] = y;
+        vector[2] = z;
+        vector[3] = index;
     }
+
+    public double[] GetVector(){
+        return vector;
+    }
+
 
 
 }

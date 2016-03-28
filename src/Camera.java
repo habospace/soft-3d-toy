@@ -8,6 +8,4 @@ public class Camera {
     private Vector position;
     private Vector target;
 
-
-
 }
