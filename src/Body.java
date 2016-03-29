@@ -5,18 +5,18 @@ public class Body {
 
     private int verticescount;
     private Vector[] vertices;
-    private double[][] projection;
+    private int[][] projection;
 
     public Body(int verticescount){
         this.verticescount = verticescount;
         this.vertices = new Vector [verticescount];
-        this.projection = new double[verticescount][2];
+        this.projection = new int[verticescount][2];
     }
 
     public Body(){
         this.verticescount = 8;
         this.vertices = new Vector[verticescount];
-        this.projection = new double[verticescount][2];
+        this.projection = new int[verticescount][2];
         AddVertex(new Vector (5, -5, 50), 0);
         AddVertex(new Vector (-5, -5, 50), 1);
         AddVertex(new Vector (-5, 5, 50), 2);
@@ -46,12 +46,14 @@ public class Body {
                         int framewidth, int frameheight){
         for (int i = 0; i < verticescount; i++){
             double[] projvector = projectionmatrix.Multiply(vertices[i]);
-            projection[i][0] = (projvector[0]/projvector[3]*framewidth/2)+framewidth/2;
-            projection[i][1] = (projvector[1]/projvector[3]*frameheight/2)+frameheight/2;
+            double projx = (projvector[0]/projvector[3] *framewidth/2)+framewidth/2;
+            projection[i][0] = (int) projx;
+            double projy = (projvector[1]/projvector[3]*frameheight/2)+frameheight/2;
+            projection[i][1] = (int) projy;
         }
     }
 
-    public double[][] GetProjection(){
+    public int[][] GetProjection(){
         return projection;
     }
 }
