@@ -25,10 +25,4 @@ public class TranslationMatrix extends TransformationMatrix {
         matrix[1][3] = deltaY;
         matrix[2][3] = deltaZ;
     }
-
-    public void printMatrix(){
-        for(int i = 0; i < matrixheight; i++){
-            System.out.println("A kurva anyadat te geci!!!");
-        }
-    }
 }
