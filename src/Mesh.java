@@ -42,18 +42,11 @@ public class Mesh {
         }
     }
 
-    public void Project(VectorMultipliable projectionmatrix,
-                        int framewidth, int frameheight){
-        for (int i = 0; i < verticescount; i++){
-            double[] projvector = projectionmatrix.Multiply(vertices[i]);
-            double projx = (projvector[0]/projvector[3] *framewidth/2)+framewidth/2;
-            projection[i][0] = (int) projx;
-            double projy = (projvector[1]/projvector[3]*frameheight/2)+frameheight/2;
-            projection[i][1] = (int) projy;
-        }
+    public int getVerticescount(){
+        return verticescount;
     }
 
-    public int[][] GetProjection(){
-        return projection;
+    public Vector getVertex(int index){
+        return vertices[index];
     }
 }
