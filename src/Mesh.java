@@ -20,21 +20,21 @@ public class Mesh {
         this.vertices = new Vector[verticescount];
         this.maxlinescount = getMaximumLines(verticescount);
         this.lines = new int[maxlinescount][2];
-        AddVertex(new Vector (5, -5, 50), 0);
-        AddVertex(new Vector (-5, -5, 50), 1);
-        AddVertex(new Vector (-5, 5, 50), 2);
-        AddVertex(new Vector (5, 5, 50), 3);
-        AddVertex(new Vector (5, -5, 60), 4);
-        AddVertex(new Vector (-5, -5, 60), 5);
-        AddVertex(new Vector (-5, 5, 60), 6);
-        AddVertex(new Vector (5, 5, 60), 7);
+        addVertex(new Vector (5, -5, 40), 0);
+        addVertex(new Vector (-5, -5, 40), 1);
+        addVertex(new Vector (-5, 5, 40), 2);
+        addVertex(new Vector (5, 5, 40), 3);
+        addVertex(new Vector (5, -5, 50), 4);
+        addVertex(new Vector (-5, -5, 50), 5);
+        addVertex(new Vector (-5, 5, 50), 6);
+        addVertex(new Vector (5, 5, 50), 7);
     }
 
     private int getMaximumLines(int verticescount){
         return (verticescount*(verticescount -1))/2;
     }
 
-    public void AddVertex(Vector vertex, int index){
+    public void addVertex(Vector vertex, int index){
         try {
             vertices[index] = vertex;
         }
@@ -53,17 +53,21 @@ public class Mesh {
         }
     }
 
-    public void Move(VectorMultipliable matrix){
+    public void move(VectorMultipliable matrix){
         for(int i = 0; i < verticescount; i++){
-            vertices[i].UpdateVector(matrix.Multiply(vertices[i]));
+            vertices[i].updateVector(matrix.multiply(vertices[i]));
         }
     }
 
-    public int getVerticescount(){
+    public int getVerticesCount(){
         return verticescount;
     }
 
     public Vector getVertex(int index){
         return vertices[index];
+    }
+
+    public int[][] getLines(){
+        return lines;
     }
 }
