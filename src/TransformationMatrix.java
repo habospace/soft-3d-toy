@@ -7,11 +7,24 @@ public class TransformationMatrix implements VectorMultipliable{
     protected static final int matrixwidth = 4;
     protected double[][] matrix = new double[matrixheight][matrixwidth];
 
-    public double[][] GetMatrix (){
+    public double[][] getMatrix(){
         return matrix;
     }
 
-    public void PrintMatrix (){
+    private void makeMatrix(){
+        for(int i = 0; i < matrixheight; i++){
+            for (int j = 0; j < matrixwidth; j++){
+                if (i == j){
+                    matrix[i][j] = 1;
+                }
+                else {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    public void printMatrix(){
         for(int i = 0; i < matrixheight; i++){
             System.out.println();
             for (int j = 0; j < matrixwidth; j++){
@@ -20,8 +33,8 @@ public class TransformationMatrix implements VectorMultipliable{
         }
     }
 
-    public double[] Multiply(Vector vec){
-        double[] vector = vec.GetVector();
+    public double[] multiply(Vector vec){
+        double[] vector = vec.getDimensions();
         double[] multipliedvector = new double[matrixheight];
         for (int i = 0; i < matrixheight; i++){
             double v0 = matrix[i][0] * vector[0];

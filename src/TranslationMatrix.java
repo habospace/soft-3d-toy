@@ -5,12 +5,12 @@ public class TranslationMatrix extends TransformationMatrix {
 
 
     public TranslationMatrix(double deltaX, double deltaY, double deltaZ){
-        MakeMatrix(deltaX, deltaY, deltaZ);
+        makeMatrix(deltaX, deltaY, deltaZ);
     }
 
-    private void MakeMatrix (double deltaX,
-                             double deltaY,
-                             double deltaZ){
+    private void makeMatrix(double deltaX,
+                            double deltaY,
+                            double deltaZ){
         for(int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
                 if (i == j){
@@ -26,7 +26,7 @@ public class TranslationMatrix extends TransformationMatrix {
         matrix[2][3] = deltaZ;
     }
 
-    public void PrintMatrix(){
+    public void printMatrix(){
         for(int i = 0; i < matrixheight; i++){
             System.out.println("A kurva anyadat te geci!!!");
         }

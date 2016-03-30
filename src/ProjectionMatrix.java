@@ -10,10 +10,10 @@ public class ProjectionMatrix extends TransformationMatrix {
     private static final double farZ = 100;
 
     public ProjectionMatrix (){
-        MakeMatrix();
+        makeMatrix();
     }
 
-    private void MakeMatrix(){
+    private void makeMatrix(){
         for (int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
                 matrix[i][j] = 0;

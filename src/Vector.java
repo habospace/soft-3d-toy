@@ -21,23 +21,23 @@ public class Vector {
         vector[3] = index;
     }
 
-    public void UpdateVector(double x, double y, double z){
+    public void updateVector(double x, double y, double z){
         vector[0] = x;
         vector[1] = y;
         vector[2] = z;
     }
 
-    public void UpdateVector(double[] newposition){
+    public void updateVector(double[] newposition){
         vector[0] = newposition[0];
         vector[1] = newposition[1];
         vector[2] = newposition[2];
     }
 
-    public double[] GetVector(){
+    public double[] getDimensions(){
         return vector;
     }
 
-    public void PrintVector(){
+    public void printVector(){
         for(int i = 0; i < vectorsize; i++){
             System.out.print(vector[i]+" ");
         }

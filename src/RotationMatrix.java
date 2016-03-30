@@ -10,14 +10,14 @@ public class RotationMatrix extends TransformationMatrix  {
                           double c, double uUn,
                           double vUn, double wUn,
                           double theta){
-        MakeMatrix(a, b, c, uUn, vUn, wUn, theta);
+        makeMatrix(a, b, c, uUn, vUn, wUn, theta);
     }
 
-    private void MakeMatrix(double a, double b,
+    private void makeMatrix(double a, double b,
                             double c, double uUn,
                             double vUn, double wUn,
                             double theta){
-        double l = GetLength(uUn, vUn, wUn);
+        double l = getLength(uUn, vUn, wUn);
         double u = uUn/l;
         double v = vUn/l;
         double w = wUn/l;
@@ -49,7 +49,7 @@ public class RotationMatrix extends TransformationMatrix  {
         matrix[3][3] = 1;
     }
 
-    private double GetLength(double x,
+    private double getLength(double x,
                              double y,
                              double z){
         double length = Math.sqrt(x*x + y*y + z*z);

@@ -5,34 +5,34 @@ import java.lang.Math;
 public class Test {
 
     public static void main (String[] args){
-        /**
+
         Mesh cube = new Mesh(8);
-        cube.AddVertex(new Vector(-1, 1, 1), 0);
-        cube.AddVertex(new Vector(1, 1, 1), 1);
-        cube.AddVertex(new Vector(-1, -1, 1), 2);
-        cube.AddVertex(new Vector(-1, -1, -1), 3);
-        cube.AddVertex(new Vector(-1, 1, -1), 4);
-        cube.AddVertex(new Vector(1, 1, -1), 5);
-        cube.AddVertex(new Vector(1, -1, 1), 6);
-        cube.AddVertex(new Vector(1, -1, -1), 7);
+        cube.addVertex(new Vector(-1, 1, 1), 0);
+        cube.addVertex(new Vector(1, 1, 1), 1);
+        cube.addVertex(new Vector(-1, -1, 1), 2);
+        cube.addVertex(new Vector(-1, -1, -1), 3);
+        cube.addVertex(new Vector(-1, 1, -1), 4);
+        cube.addVertex(new Vector(1, 1, -1), 5);
+        cube.addVertex(new Vector(1, -1, 1), 6);
+        cube.addVertex(new Vector(1, -1, -1), 7);
 
         TranslationMatrix matrix1 = new TranslationMatrix(1, 2, 3);
-        matrix1.PrintMatrix();
+        matrix1.printMatrix();
         System.out.println();
         RotationMatrix matrix2 = new RotationMatrix(0, 0, 0, 0, 0, 1, 360);
-        matrix2.PrintMatrix();
+        matrix2.printMatrix();
         System.out.println();
         ProjectionMatrix matrix3 = new ProjectionMatrix();
-        matrix3.PrintMatrix();
+        matrix3.printMatrix();
         System.out.println();
         System.out.println();
 
         Vector vector1 = new Vector(0, 0, 0);
-        vector1.PrintVector();
+        vector1.printVector();
         System.out.println();
         System.out.println();
 
-        double[] multipliedvector1 = matrix1.Multiply(vector1);
+        double[] multipliedvector1 = matrix1.multiply(vector1);
         System.out.println();
         System.out.println();
         System.out.print(multipliedvector1[0]+"; ");
@@ -43,7 +43,7 @@ public class Test {
         System.out.println();
 
         Vector vector2 = new Vector(5, 5, 30);
-        double[] multipliedvector2 = matrix3.Multiply(vector2);
+        double[] multipliedvector2 = matrix3.multiply(vector2);
         System.out.println();
         System.out.println();
         System.out.print(multipliedvector2[0]+"; ");
@@ -54,7 +54,7 @@ public class Test {
         System.out.println();
 
         System.out.println(Math.toRadians(45));
-         */
+
 
     }
 }
