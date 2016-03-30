@@ -1,19 +1,19 @@
 /**
  * Created by habospace on 25/03/16.
  */
-public class Body {
+public class Mesh {
 
     private int verticescount;
     private Vector[] vertices;
     private int[][] projection;
 
-    public Body(int verticescount){
+    public Mesh(int verticescount){
         this.verticescount = verticescount;
         this.vertices = new Vector [verticescount];
         this.projection = new int[verticescount][2];
     }
 
-    public Body(){
+    public Mesh(){
         this.verticescount = 8;
         this.vertices = new Vector[verticescount];
         this.projection = new int[verticescount][2];
