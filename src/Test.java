@@ -5,7 +5,8 @@ import java.lang.Math;
 public class Test {
 
     public static void main (String[] args){
-        Body cube = new Body(8);
+        /**
+        Mesh cube = new Mesh(8);
         cube.AddVertex(new Vector(-1, 1, 1), 0);
         cube.AddVertex(new Vector(1, 1, 1), 1);
         cube.AddVertex(new Vector(-1, -1, 1), 2);
@@ -53,5 +54,7 @@ public class Test {
         System.out.println();
 
         System.out.println(Math.toRadians(45));
+         */
+
     }
 }

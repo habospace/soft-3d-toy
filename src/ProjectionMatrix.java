@@ -19,7 +19,6 @@ public class ProjectionMatrix extends TransformationMatrix {
                 matrix[i][j] = 0;
             }
         }
-        double frustumdepth = farZ - nearZ;
 
         matrix[1][1] = 1 / Math.tan(fovy / 2);
         matrix[0][0] = matrix[1][1] / aspect;
