@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.lang.Math;
 
 public class Engine extends JPanel implements ActionListener {
 
@@ -39,8 +40,8 @@ public class Engine extends JPanel implements ActionListener {
     public void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
         graphics.setColor(Color.BLACK);
-        //drawLines(graphics);
-        drawPoints(graphics);
+        drawLines(graphics);
+        //drawPoints(graphics);
     }
 
     private void drawPoints(Graphics graphics){
@@ -67,18 +68,25 @@ public class Engine extends JPanel implements ActionListener {
         }
     }
 
-    private void drawLine(int x1, int y1, int x2, int y2,
+    public void drawLine(int x1, int y1, int x2, int y2,
                           Graphics graphics){
-        int deltax = x2 - x1;
-        int deltay = y2 - y1;
-        int incY = y1;
-        int ynum = deltax / 2;
-        for (int incX = x1; incX <= x2; incX++) {
-            putPixel(incX, incY, graphics);
-            ynum += deltay;
-            if (ynum >= deltax) {
-                ynum -= deltax;
-                incY++;
+        int dx = Math.abs(x2 - x1);
+        int dy = Math.abs(y2 - y1);
+        int sx = (x1 < x2) ? 1 : -1;
+        int sy = (y1 < y2) ? 1 : -1;
+        int err = dx - dy;
+
+        while (true) {
+            putPixel(x1, y1, graphics);
+            if ((x1 == x2) && (y1 == y2)){
+                break;
+            }
+            int e2 = 2 * err;
+            if (e2 > -dy){
+                err -= dy; x1 += sx;
+            }
+            if (e2 < dx){
+                err += dx; y1 += sy;
             }
         }
     }
