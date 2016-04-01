@@ -1,14 +1,13 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.lang.Math;
 
-public class Engine extends JPanel implements ActionListener {
+public class Camera extends JPanel implements ActionListener, MouseMotionListener, MouseListener{
 
     private HashMap<Mesh, int[][]> meshes = new HashMap<>();
     private RotationMatrix rotmat = new RotationMatrix(0, -5, 55, 0, 10, 0, 5);
@@ -17,9 +16,12 @@ public class Engine extends JPanel implements ActionListener {
     private int framewidth;
     private static final int x = 0;
     private static final int y = 1;
+    private boolean clickedOnMesh = false;
+    private int[][] mouseMotion = new int[2][2];
+    private boolean screenUntouched = true;
     Timer timer;
 
-    public Engine (int framewidth, int frameheight, int delay){
+    public Camera(int framewidth, int frameheight, int delay){
         this.framewidth = framewidth;
         this.frameheight = frameheight;
         this.timer = new Timer(delay, this);
@@ -96,12 +98,6 @@ public class Engine extends JPanel implements ActionListener {
         graphics.drawLine(x, y, x, y);
     }
 
-    public void actionPerformed(ActionEvent e){
-        moveAll(rotmat);
-        projectMeshes(projmat);
-        repaint();
-    }
-
     private void moveAll(VectorMultipliable matrix){
         for (Mesh mesh : meshes.keySet()){
             mesh.move(matrix);
@@ -120,10 +116,61 @@ public class Engine extends JPanel implements ActionListener {
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e){
+        moveAll(rotmat);
+        projectMeshes(projmat);
+        repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (screenUntouched){
+            mouseMotion[0][x] = e.getX();
+            mouseMotion[0][y] = e.getY();
+        }
+        else{
+            mouseMotion[1][x] = mouseMotion[0][x];
+            mouseMotion[1][y] = mouseMotion[0][y];
+            mouseMotion[0][x] = e.getX();
+            mouseMotion[0][y] = e.getY();
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
     public static void main(String[] args){
-        Engine engine = new Engine(300, 300, 500);
+        Camera engine = new Camera(300, 300, 100);
         JFrame frame = new JFrame();
-        frame.setTitle("3d Engine");
+        frame.setTitle("3d Camera");
         frame.setSize(300, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
