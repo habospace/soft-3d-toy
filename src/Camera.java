@@ -87,7 +87,6 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
         int sx = (x1 < x2) ? 1 : -1;
         int sy = (y1 < y2) ? 1 : -1;
         int err = dx - dy;
-
         while (true) {
             putPixel(x1, y1, graphics);
             if ((x1 == x2) && (y1 == y2)){
@@ -174,13 +173,10 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
         }
     }
 
-
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(draggedOnMesh){
-            int x1 = e.getX();
-            int y1 = e.getY();
-        }
+        meshUnTouched = true;
+        draggedOnMesh = false;
     }
 
     @Override
