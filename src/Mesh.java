@@ -7,14 +7,14 @@ import java.util.Arrays;
 public class Mesh {
 
     private int verticescount;
-    private Vector[] vertices;
+    private Vec3[] vertices;
     private int maxlinescount;
     private int[][] lines;
-    private Vector centre;
+    private Vec3 centre;
 
-    public Mesh(int verticescount, Vector centre){
+    public Mesh(int verticescount, Vec3 centre){
         this.verticescount = verticescount;
-        this.vertices = new Vector [verticescount];
+        this.vertices = new Vec3[verticescount];
         this.maxlinescount = calculateMaximumLines(verticescount);
         this.lines = new int[maxlinescount][2];
         this.centre = centre;
@@ -22,18 +22,18 @@ public class Mesh {
 
     public Mesh(){
         this.verticescount = 8;
-        this.vertices = new Vector[verticescount];
+        this.vertices = new Vec3[verticescount];
         this.maxlinescount = calculateMaximumLines(verticescount);
         this.lines = new int[maxlinescount][2];
-        this.centre = new Vector(0, 0, 55);
-        addVertex(new Vector (5, -5, 50), 0);
-        addVertex(new Vector (-5, -5, 50), 1);
-        addVertex(new Vector (-5, 5, 50), 2);
-        addVertex(new Vector (5, 5, 50), 3);
-        addVertex(new Vector (5, -5, 60), 4);
-        addVertex(new Vector (-5, -5, 60), 5);
-        addVertex(new Vector (-5, 5, 60), 6);
-        addVertex(new Vector (5, 5, 60), 7);
+        this.centre = new Vec3(0, 0, 55);
+        addVertex(new Vec3(5, -5, 50), 0);
+        addVertex(new Vec3(-5, -5, 50), 1);
+        addVertex(new Vec3(-5, 5, 50), 2);
+        addVertex(new Vec3(5, 5, 50), 3);
+        addVertex(new Vec3(5, -5, 60), 4);
+        addVertex(new Vec3(-5, -5, 60), 5);
+        addVertex(new Vec3(-5, 5, 60), 6);
+        addVertex(new Vec3(5, 5, 60), 7);
     }
 
     private int calculateMaximumLines(int verticescount){
@@ -57,7 +57,7 @@ public class Mesh {
         return margins;
     }
 
-    public void addVertex(Vector vertex, int index){
+    public void addVertex(Vec3 vertex, int index){
         try {
             vertices[index] = vertex;
         }
@@ -78,7 +78,7 @@ public class Mesh {
 
     public void move(VectorMultipliable matrix){
         for(int i = 0; i < verticescount; i++){
-            vertices[i].updateVector(matrix.multiply(vertices[i]));
+            vertices[i].updateAbsLocation(matrix.multiply(vertices[i]));
         }
     }
 
@@ -86,7 +86,7 @@ public class Mesh {
         return verticescount;
     }
 
-    public Vector getVertex(int index){
+    public Vec3 getVertex(int index){
         return vertices[index];
     }
 
@@ -94,7 +94,7 @@ public class Mesh {
         return lines;
     }
 
-    public Vector getCentre(){
+    public Vec3 getCentre(){
         return centre;
     }
 }

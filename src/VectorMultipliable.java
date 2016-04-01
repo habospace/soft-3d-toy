@@ -3,6 +3,6 @@
  */
 public interface VectorMultipliable {
 
-    double[] multiply(Vector vec);
+    double[] multiply(Vec3 vec);
 
 }

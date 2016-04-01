@@ -6,15 +6,15 @@ public class Test {
 
     public static void main (String[] args){
 
-        Mesh cube = new Mesh(8, new Vector(0, 0, 0));
-        cube.addVertex(new Vector(-1, 1, 1), 0);
-        cube.addVertex(new Vector(1, 1, 1), 1);
-        cube.addVertex(new Vector(-1, -1, 1), 2);
-        cube.addVertex(new Vector(-1, -1, -1), 3);
-        cube.addVertex(new Vector(-1, 1, -1), 4);
-        cube.addVertex(new Vector(1, 1, -1), 5);
-        cube.addVertex(new Vector(1, -1, 1), 6);
-        cube.addVertex(new Vector(1, -1, -1), 7);
+        Mesh cube = new Mesh(8, new Vec3(0, 0, 0));
+        cube.addVertex(new Vec3(-1, 1, 1), 0);
+        cube.addVertex(new Vec3(1, 1, 1), 1);
+        cube.addVertex(new Vec3(-1, -1, 1), 2);
+        cube.addVertex(new Vec3(-1, -1, -1), 3);
+        cube.addVertex(new Vec3(-1, 1, -1), 4);
+        cube.addVertex(new Vec3(1, 1, -1), 5);
+        cube.addVertex(new Vec3(1, -1, 1), 6);
+        cube.addVertex(new Vec3(1, -1, -1), 7);
 
         TranslationMatrix matrix1 = new TranslationMatrix(1, 2, 3);
         matrix1.printMatrix();
@@ -27,8 +27,8 @@ public class Test {
         System.out.println();
         System.out.println();
 
-        Vector vector1 = new Vector(0, 0, 0);
-        vector1.printVector();
+        Vec3 vector1 = new Vec3(0, 0, 0);
+        vector1.print();
         System.out.println();
         System.out.println();
 
@@ -42,7 +42,7 @@ public class Test {
         System.out.println();
         System.out.println();
 
-        Vector vector2 = new Vector(5, 5, 30);
+        Vec3 vector2 = new Vec3(5, 5, 30);
         double[] multipliedvector2 = matrix3.multiply(vector2);
         System.out.println();
         System.out.println();

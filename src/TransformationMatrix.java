@@ -33,8 +33,8 @@ public class TransformationMatrix implements VectorMultipliable{
         }
     }
 
-    public double[] multiply(Vector vec){
-        double[] vector = vec.getDimensions();
+    public double[] multiply(Vec3 vec){
+        double[] vector = vec.getVector();
         double[] multipliedvector = new double[matrixheight];
         for (int i = 0; i < matrixheight; i++){
             double v0 = matrix[i][0] * vector[0];
