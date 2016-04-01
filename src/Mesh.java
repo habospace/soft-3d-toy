@@ -40,9 +40,9 @@ public class Mesh {
         return (verticescount*(verticescount -1))/2;
     }
 
-    private double[] calculateMaximumArea(VectorMultipliable projmatrix,
-                                          int frameheight,
-                                          int framewidth){
+    public double[] calculateMaximumArea(VectorMultipliable projmatrix,
+                                          int framewidth,
+                                          int frameheight){
         Double[] tempXcont = new Double[verticescount];
         Double[] tempYcont = new Double[verticescount];
         for (int i = 0; i < verticescount; i++) {

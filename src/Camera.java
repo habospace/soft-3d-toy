@@ -12,13 +12,13 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
     private HashMap<Mesh, int[][]> meshes = new HashMap<>();
     private RotationMatrix rotmat = new RotationMatrix(0, -5, 55, 0, 10, 0, 5);
     private ProjectionMatrix projmat = new ProjectionMatrix();
+    private double[] margins;
     private int frameheight;
     private int framewidth;
     private static final int x = 0;
     private static final int y = 1;
-    private boolean clickedOnMesh = false;
-    private int[][] mouseMotion = new int[2][2];
-    private boolean screenUntouched = true;
+    private int[] mouseMotion = new int[2];
+    private boolean draggedOnMesh = false;
     Timer timer;
 
     public Camera(int framewidth, int frameheight, int delay){
@@ -36,7 +36,8 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
     }
 
     public void addMesh(Mesh mesh){
-            meshes.put(mesh, new int[mesh.getVerticesCount()][2]);
+        meshes.put(mesh, new int[mesh.getVerticesCount()][2]);
+        this.margins = mesh.calculateMaximumArea(projmat, framewidth, frameheight);
     }
 
     public void paintComponent(Graphics graphics){
@@ -116,6 +117,18 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
         }
     }
 
+    private static boolean clickedOnObject(int x, int y,
+                                           double[] margins){
+        double minX = margins[0];
+        double maxX = margins[2];
+        double minY = margins[1];
+        double maxY = margins[3];
+        if ((minX < x && x < maxX) && (minY < x && x < maxY)){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
         moveAll(rotmat);
@@ -125,15 +138,23 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (screenUntouched){
-            mouseMotion[0][x] = e.getX();
-            mouseMotion[0][y] = e.getY();
+        int x1 = e.getX();
+        int y1 = e.getY();
+        if (clickedOnObject(x1, y1, margins)){
+            mouseMotion[x] = x1;
+            mouseMotion[y] = y1;
+            draggedOnMesh = true;
         }
-        else{
-            mouseMotion[1][x] = mouseMotion[0][x];
-            mouseMotion[1][y] = mouseMotion[0][y];
-            mouseMotion[0][x] = e.getX();
-            mouseMotion[0][y] = e.getY();
+        else {
+            draggedOnMesh = false;
+        }
+    }
+
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if(draggedOnMesh){
+
         }
     }
 
@@ -149,11 +170,6 @@ public class Camera extends JPanel implements ActionListener, MouseMotionListene
 
     @Override
     public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
 
     }
 

@@ -6,7 +6,7 @@ public class Test {
 
     public static void main (String[] args){
 
-        Mesh cube = new Mesh(8);
+        Mesh cube = new Mesh(8, new Vector(0, 0, 0));
         cube.addVertex(new Vector(-1, 1, 1), 0);
         cube.addVertex(new Vector(1, 1, 1), 1);
         cube.addVertex(new Vector(-1, -1, 1), 2);
