@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.Arrays;
+
 /**
  * Created by habospace on 25/03/16.
  */
@@ -7,31 +10,51 @@ public class Mesh {
     private Vector[] vertices;
     private int maxlinescount;
     private int[][] lines;
+    private Vector centre;
 
-    public Mesh(int verticescount){
+    public Mesh(int verticescount, Vector centre){
         this.verticescount = verticescount;
         this.vertices = new Vector [verticescount];
-        this.maxlinescount = getMaximumLines(verticescount);
+        this.maxlinescount = calculateMaximumLines(verticescount);
         this.lines = new int[maxlinescount][2];
+        this.centre = centre;
     }
 
     public Mesh(){
         this.verticescount = 8;
         this.vertices = new Vector[verticescount];
-        this.maxlinescount = getMaximumLines(verticescount);
+        this.maxlinescount = calculateMaximumLines(verticescount);
         this.lines = new int[maxlinescount][2];
-        addVertex(new Vector (5, -5, 40), 0);
-        addVertex(new Vector (-5, -5, 40), 1);
-        addVertex(new Vector (-5, 5, 40), 2);
-        addVertex(new Vector (5, 5, 40), 3);
-        addVertex(new Vector (5, -5, 50), 4);
-        addVertex(new Vector (-5, -5, 50), 5);
-        addVertex(new Vector (-5, 5, 50), 6);
-        addVertex(new Vector (5, 5, 50), 7);
+        this.centre = new Vector(0, 0, 55);
+        addVertex(new Vector (5, -5, 50), 0);
+        addVertex(new Vector (-5, -5, 50), 1);
+        addVertex(new Vector (-5, 5, 50), 2);
+        addVertex(new Vector (5, 5, 50), 3);
+        addVertex(new Vector (5, -5, 60), 4);
+        addVertex(new Vector (-5, -5, 60), 5);
+        addVertex(new Vector (-5, 5, 60), 6);
+        addVertex(new Vector (5, 5, 60), 7);
     }
 
-    private int getMaximumLines(int verticescount){
+    private int calculateMaximumLines(int verticescount){
         return (verticescount*(verticescount -1))/2;
+    }
+
+    private double[] calculateMaximumArea(VectorMultipliable projmatrix,
+                                          int frameheight,
+                                          int framewidth){
+        Double[] tempXcont = new Double[verticescount];
+        Double[] tempYcont = new Double[verticescount];
+        for (int i = 0; i < verticescount; i++) {
+            double[] projvector = projmatrix.multiply(vertices[i]);
+            tempXcont[i] = (projvector[0]/projvector[3]*framewidth/2)+framewidth/2;
+            tempYcont[i] = (projvector[1]/projvector[3]*frameheight/2)+frameheight/2;
+        }
+        double[] margins = {Collections.min(Arrays.asList(tempXcont)),
+                            Collections.min(Arrays.asList(tempYcont)),
+                            Collections.max(Arrays.asList(tempXcont)),
+                            Collections.max(Arrays.asList(tempYcont))};
+        return margins;
     }
 
     public void addVertex(Vector vertex, int index){
@@ -69,5 +92,9 @@ public class Mesh {
 
     public int[][] getLines(){
         return lines;
+    }
+
+    public Vector getCentre(){
+        return centre;
     }
 }
