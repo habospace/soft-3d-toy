@@ -7,16 +7,16 @@ import java.util.Arrays;
 public class Mesh {
 
     private int verticescount;
-    private Vec3[] vertices;
     private int maxlinescount;
-    private int[][] lines;
+    private Vec3[] vertices;
     private Vec3 centre;
+    private Edge[] edges;
 
     public Mesh(int verticescount, Vec3 centre){
         this.verticescount = verticescount;
         this.vertices = new Vec3[verticescount];
         this.maxlinescount = calculateMaximumLines(verticescount);
-        this.lines = new int[maxlinescount][2];
+        this.edges = new Edge[maxlinescount];
         this.centre = centre;
     }
 
@@ -24,7 +24,7 @@ public class Mesh {
         this.verticescount = 8;
         this.vertices = new Vec3[verticescount];
         this.maxlinescount = calculateMaximumLines(verticescount);
-        this.lines = new int[maxlinescount][2];
+        this.edges = new Edge[maxlinescount];
         this.centre = new Vec3(0, 0, 55);
         addVertex(new Vec3(5, -5, 50), 0);
         addVertex(new Vec3(-5, -5, 50), 1);
@@ -66,10 +66,9 @@ public class Mesh {
         }
     }
 
-    public void addLine(int vertex1, int vertex2, int index){
+    public void addEdge(int vertex1, int vertex2, int index){
         try{
-            lines[index][0] = vertex1;
-            lines[index][1] = vertex2;
+            edges[index] = new Edge(vertex1, vertex2);
         }
         catch (ArrayIndexOutOfBoundsException error){
             System.out.println("Exception thrown :" + error);
@@ -90,8 +89,8 @@ public class Mesh {
         return vertices[index];
     }
 
-    public int[][] getLines(){
-        return lines;
+    public Edge[] getEdges(){
+        return edges;
     }
 
     public Vec3 getCentre(){
