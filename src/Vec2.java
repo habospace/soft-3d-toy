@@ -1,3 +1,4 @@
+import java.lang.Math;
 /**
  * Created by habospace on 01/04/16.
  */
@@ -5,16 +6,11 @@ public class Vec2 {
 
     protected double X;
     protected double Y;
-    private static final int vectorSize = 2;
 
-    public Vec2(double x, double y){
+    public Vec2(double x,
+                double y){
         this.X = x;
         this.Y = y;
-    }
-
-    public Vec2(double[] position){
-        this.X = position[0];
-        this.Y = position[1];
     }
 
     public Vec2(){
@@ -22,29 +18,25 @@ public class Vec2 {
         this.Y = 0;
     }
 
-    public void updateAbsLocation(double x, double y){
-        this.X = x;
-        this.Y = y;
+    public void updateAbsLocation(double x,
+                                  double y){
+        X = x;
+        Y = y;
     }
 
-    public void updateAbsLocation(double[] newloc){
-        this.X = newloc[0];
-        this.Y = newloc[1];
+    public void updateRelLocation(double deltaX,
+                                  double deltaY){
+        X += deltaX;
+        Y += deltaY;
     }
 
-    public void updateRelLocation(double x, double y){
-        this.X += x;
-        this.Y += y;
+    public Vec2 normalize(){
+        double magnitude = Math.sqrt((X*X) + (Y*Y));
+        return new Vec2(X/magnitude, Y/magnitude);
     }
 
-    public void updateRelLocation(double[] newloc){
-        this.X += newloc[0];
-        this.Y = newloc[1];
-    }
-
-    public double[] getVector(){
-        double[] vector = {X, Y};
-        return vector;
+    public double crossProduct(Vec2 vec){
+        return (X * vec.getY() - Y * vec.getX());
     }
 
     public double getX(){

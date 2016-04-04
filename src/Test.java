@@ -31,28 +31,6 @@ public class Test {
         vector1.print();
         System.out.println();
         System.out.println();
-
-        double[] multipliedvector1 = matrix1.multiply(vector1);
-        System.out.println();
-        System.out.println();
-        System.out.print(multipliedvector1[0]+"; ");
-        System.out.print(multipliedvector1[1]+"; ");
-        System.out.print(multipliedvector1[2]+"; ");
-        System.out.print(multipliedvector1[3]+"; ");
-        System.out.println();
-        System.out.println();
-
-        Vec3 vector2 = new Vec3(5, 5, 30);
-        double[] multipliedvector2 = matrix3.multiply(vector2);
-        System.out.println();
-        System.out.println();
-        System.out.print(multipliedvector2[0]+"; ");
-        System.out.print(multipliedvector2[1]+"; ");
-        System.out.print(multipliedvector2[2]+"; ");
-        System.out.print(multipliedvector2[3]+"; ");
-        System.out.println();
-        System.out.println();
-
         System.out.println(Math.toRadians(45));
     }
 }

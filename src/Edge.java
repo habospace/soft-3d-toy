@@ -11,12 +11,7 @@ public class Edge {
         this.vertex2 = vertex2;
     }
 
-    public Edge (int[] vertices){
-        this.vertex1 = vertices[0];
-        this.vertex2 = vertices[1];
-    }
-
-    public int[] getVertices(){
+    public int[] getVertexPair(){
         int[] vertices = {vertex1, vertex2};
         return vertices;
     }

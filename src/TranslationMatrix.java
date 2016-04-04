@@ -4,7 +4,9 @@
 public class TranslationMatrix extends TransformationMatrix {
 
 
-    public TranslationMatrix(double deltaX, double deltaY, double deltaZ){
+    public TranslationMatrix(double deltaX,
+                             double deltaY,
+                             double deltaZ){
         makeMatrix(deltaX, deltaY, deltaZ);
     }
 

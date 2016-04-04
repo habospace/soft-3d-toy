@@ -6,11 +6,11 @@ import java.lang.Math;
 
 public class RotationMatrix extends TransformationMatrix  {
 
-    public RotationMatrix(double a, double b,
-                          double c, double uUn,
-                          double vUn, double wUn,
+    public RotationMatrix(double x1, double y1,
+                          double z1, double x2,
+                          double y2, double z2,
                           double theta){
-        makeMatrix(a, b, c, uUn, vUn, wUn, theta);
+        makeMatrix(x1, y1, z1, x2, y2, z2, theta);
     }
 
     private void makeMatrix(double a, double b,
@@ -52,7 +52,6 @@ public class RotationMatrix extends TransformationMatrix  {
     private double getLength(double x,
                              double y,
                              double z){
-        double length = Math.sqrt(x*x + y*y + z*z);
-        return length;
+        return Math.sqrt(x*x + y*y + z*z);
     }
 }
