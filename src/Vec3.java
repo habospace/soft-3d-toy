@@ -56,6 +56,10 @@ public class Vec3 extends Vec2{
                         X * vec.getY() - Y * vec.getX());
     }
 
+    public double dotProduct (Vec3 vec){
+        return (X * vec.getX() + Y * vec.getY() + Z * vec.getZ());
+    }
+
     public double getZ(){
         return Z;
     }
