@@ -20,15 +20,11 @@ public class Engine extends JPanel implements ActionListener{
                   int framewidth,
                   int frameheight){
         this.camera = camera;
+        KeyListener cameraAlias = this.camera;
         this.framewidth = framewidth;
         this.frameheight = frameheight;
         this.timer = new Timer(delay, this);
-        MouseListener cameraAlias1 = this.camera;
-        MouseMotionListener cameraAlias2 = this.camera;
-        KeyListener cameraAlias3 = this.camera;
-        addMouseListener(cameraAlias1);
-        addMouseMotionListener(cameraAlias2);
-        addKeyListener(cameraAlias3);
+        addKeyListener(cameraAlias);
         setFocusable(true);
     }
 
@@ -103,21 +99,25 @@ public class Engine extends JPanel implements ActionListener{
     }
 
     private void render(){
-        Vec3 campos = camera.getPosition();
+        Vec3 campos = camera.getViewfrom();
         Multipliable lookatmatrix
                 = new LookAtMatrix(campos,
-                camera.getOrientation(),
-                camera.getUpDirection());
+                                   camera.getViewto(),
+                                   camera.getUpDirection());
         Multipliable worldmatrix
                 = new TranslationMatrix(-campos.getX(),
-                -campos.getY(), -campos.getZ());
+                                        -campos.getY(),
+                                        -campos.getZ());
 
         for (Mesh mesh : meshes.keySet()){
             Vec3[] vertices = mesh.getVertices();
             for (int i = 0; i < mesh.getVerticesCount(); i++){
-                Vec3 projvector = projectionmatrix.multiplyByMatrix(lookatmatrix.multiplyByMatrix(worldmatrix)).multiplyByVector(vertices[i]);
-                double projx = (projvector.getX()/projvector.getW()*framewidth/2)+framewidth/2;
-                double projy = (projvector.getY()/projvector.getW()*frameheight/2)+frameheight/2;
+                //Vec3 projvector = lookatmatrix.multiplyByVector(vertices[i]);
+                //projvector = worldmatrix.multiplyByVector(projvector);
+                //projvector = projectionmatrix.multiplyByVector(projvector);
+                Vec3 projvector = projectionmatrix.multiplyByMatrix(worldmatrix.multiplyByMatrix(lookatmatrix)).multiplyByVector(vertices[i]);
+                double projx = (projvector.getX() / projvector.getW()*framewidth / 2) + framewidth / 2;
+                double projy = (projvector.getY() / projvector.getW()*frameheight / 2) + frameheight / 2;
                 meshes.get(mesh)[i] = new Vec2(projx, projy);
             }
         }

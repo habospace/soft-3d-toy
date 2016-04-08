@@ -27,10 +27,26 @@ public class Test {
         System.out.println();
         System.out.println();
 
-        Vec3 vector1 = new Vec3(0, 0, 0);
-        vector1.print();
+        //Vec3 vector1 = new Vec3(0, 0, 0);
+        //vector1.print();
         System.out.println();
         System.out.println();
         System.out.println(Math.toRadians(45));
+        Multipliable matrix4 = new TranslationMatrix(1, 1, 1);
+        Vec3 vector5 = new Vec3(2, 2, -3);
+        Vec3 vector6 = new Vec3(2, -1, -6);
+        Multipliable lookmat = new LookAtMatrix(new Vec3(0, 0, 0), new Vec3(-2, 1, 3), new Vec3(0, 1, 0));
+        Vec3 vector7 = lookmat.multiplyByVector(vector5);
+        vector7.print();
+        Vec3 vector8 = lookmat.multiplyByVector(vector6);
+        vector8.print();
+        //Vec3 vector1 = new Vec3(0, 15, 0);
+        //Vec3 vector2 = new Vec3(0, 0, 132);
+        //Vec3 vector3 = vector1.crossProduct(vector2);
+        //vector3.print();
+        //Vec3 vector4 = vector2.crossProduct(vector1);
+        //vector4.print();
+
+
     }
 }

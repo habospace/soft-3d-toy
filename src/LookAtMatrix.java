@@ -15,11 +15,10 @@ public class LookAtMatrix extends TransformationMatrix{
                             Vec3 lookat,
                             Vec3 up){
         Vec3 Zaxis = new Vec3(lookat.getX() - eye.getX(),
-                                    lookat.getY() - eye.getX(),
-                                    lookat.getZ() - eye.getZ()).normalize();
-        Vec3 normup = up.normalize();
-        Vec3 Xaxis = Zaxis.crossProduct(normup);
-        Vec3 Yaxis = Xaxis.crossProduct(Zaxis);
+                              lookat.getY() - eye.getX(),
+                              lookat.getZ() - eye.getZ()).normalize();
+        Vec3 Xaxis = Zaxis.crossProduct(up).normalize();
+        Vec3 Yaxis = Xaxis.crossProduct(Zaxis).normalize();
 
         matrix[0][0] = Xaxis.getX();
         matrix[0][1] = Xaxis.getY();

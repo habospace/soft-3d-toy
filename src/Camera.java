@@ -2,54 +2,43 @@ import java.awt.event.*;
 /**
  * Created by habospace on 03/04/16.
  */
-public class Camera implements KeyListener, MouseListener, MouseMotionListener{
+public class Camera implements KeyListener{
 
-    private Vec3 position;
-    private Vec3 orientation;
+    private Vec3 viewfrom;
+    private Vec3 viewto;
     private Vec3 updirection;
-    private Vec3 Xorientation;
-    private Vec2 previousMousePos;
 
     public Camera(){
-        this.position = new Vec3(0, 0, 0);
-        this.orientation = new Vec3(0, 0, 1);
+        this.viewfrom = new Vec3(0, 0, 0);
+        this.viewto = new Vec3(0, 0, -1);
         this.updirection = new Vec3(0, 1, 0);
-        this.Xorientation = new Vec3(1, 0, 0);
     }
 
     public Camera(Vec3 position,
                   Vec3 orientation,
                   Vec3 updirection){
-        this.position = position;
-        this.orientation = orientation;
+        this.viewfrom = position;
+        this.viewto = orientation;
         this.updirection = updirection;
     }
 
-    private void rotateCamera(Vec2 currentPos) {
-        double rotationX = (currentPos.getX() - previousMousePos.getX()) * 0.3;
-        double rotationY = (currentPos.getY() - previousMousePos.getY()) * 0.3;
-        RotationMatrix rotmatX
-                = new RotationMatrix(position.getX(),
-                position.getY(), position.getY(),
-                Xorientation.getX(), Xorientation.getY(),
-                Xorientation.getZ(), rotationY);
-        RotationMatrix rotmatY
-                = new RotationMatrix(position.getX(),
-                position.getY(), position.getY(),
-                updirection.getX(), updirection.getY(),
-                updirection.getZ(), rotationX);
-        TransformationMatrix transmat = rotmatX.multiplyByMatrix(rotmatY);
-        orientation = transmat.multiplyByVector(orientation);
-        updirection = transmat.multiplyByVector(updirection);
-        Xorientation = transmat.multiplyByVector(Xorientation);
+    private void rotateCamera(Multipliable rotationmatrix) {
+        viewto = rotationmatrix.multiplyByVector(viewto);
+        updirection = rotationmatrix.multiplyByVector(updirection);
+        System.out.println("POSITION:");
+        viewfrom.print();
+        System.out.println("LOOKAT:");
+        viewto.print();
+        System.out.println("UP:");
+        updirection.print();
     }
 
-    public Vec3 getPosition(){
-        return position;
+    public Vec3 getViewfrom(){
+        return viewfrom;
     }
 
-    public Vec3 getOrientation(){
-        return orientation;
+    public Vec3 getViewto(){
+        return viewto;
     }
 
     public Vec3 getUpDirection(){
@@ -57,39 +46,120 @@ public class Camera implements KeyListener, MouseListener, MouseMotionListener{
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        double x = e.getX(), y = e.getY();
-        rotateCamera(new Vec2(x, y));
-        previousMousePos.updateAbsLocation(x, y);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        previousMousePos = new Vec2(e.getX(), e.getY());
-    }
-
-    @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT){
-            position.updateRelLocation(-(Xorientation.getX()),
-                                       -(Xorientation.getY()),
-                                       -(Xorientation.getZ()));
+        Vec3 viewvector = new Vec3(viewto.getX() - viewfrom.getX(),
+                                   viewto.getY() - viewfrom.getY(),
+                                   viewto.getZ() - viewfrom.getZ());
+        Vec3 sidevector = viewvector.crossProduct(updirection);
+        if (key == KeyEvent.VK_W){
+            viewfrom.updateRelLocation(viewvector.getX(),
+                                       viewvector.getY(),
+                                       viewvector.getZ());
+            viewto.updateRelLocation(viewvector.getX(),
+                                     viewvector.getY(),
+                                     viewvector.getZ());
+            System.out.println("Forward__'W'____________");
+            System.out.println("POSITION:");
+            viewfrom.print();
+            System.out.println("LOOKAT:");
+            viewto.print();
+            System.out.println("UP:");
+            updirection.print();
         }
-        if (key == KeyEvent.VK_RIGHT){
-            position.updateRelLocation(Xorientation.getX(),
-                                       Xorientation.getY(),
-                                       Xorientation.getZ());
+        if (key == KeyEvent.VK_S){
+            viewfrom.updateRelLocation(-(viewvector.getX()),
+                                       -(viewvector.getY()),
+                                       -(viewvector.getZ()));
+            viewto.updateRelLocation(-(viewvector.getX()),
+                                     -(viewvector.getY()),
+                                     -(viewvector.getZ()));
+            System.out.println("Back__'S'____________");
+            System.out.println("POSITION:");
+            viewfrom.print();
+            System.out.println("LOOKAT:");
+            viewto.print();
+            System.out.println("UP:");
+            updirection.print();
         }
-        if (key == KeyEvent.VK_UP){
-            position.updateRelLocation(orientation.getX(),
-                                       orientation.getY(),
-                                       orientation.getZ());
+        if (key == KeyEvent.VK_D){
+            viewfrom.updateRelLocation(sidevector.getX(),
+                                       sidevector.getY(),
+                                       sidevector.getZ());
+            viewto.updateRelLocation(sidevector.getX(),
+                                     sidevector.getY(),
+                                     sidevector.getZ());
+            System.out.println("Right__'D'_______________");
+            System.out.println("POSITION:");
+            viewfrom.print();
+            System.out.println("LOOKAT:");
+            viewto.print();
+            System.out.println("UP:");
+            updirection.print();
         }
-        if (key == KeyEvent.VK_DOWN){
-            position.updateRelLocation(-(orientation.getX()),
-                                       -(orientation.getY()),
-                                       -(orientation.getZ()));
+        if (key == KeyEvent.VK_A){
+            viewfrom.updateRelLocation(-(sidevector.getX()),
+                                       -(sidevector.getY()),
+                                       -(sidevector.getZ()));
+            viewto.updateRelLocation(-(sidevector.getX()),
+                                     -(sidevector.getY()),
+                                     -(sidevector.getZ()));
+            System.out.println("Left__'A'______________");
+            System.out.println("POSITION:");
+            viewfrom.print();
+            System.out.println("LOOKAT:");
+            viewto.print();
+            System.out.println("UP:");
+            updirection.print();
+        }
+        if (key == KeyEvent.VK_L){
+
+            Multipliable rotationmatrix
+                    = new RotationMatrix(viewfrom.getX(),
+                                         viewfrom.getY(),
+                                         viewfrom.getZ(),
+                                         updirection.getX(),
+                                         updirection.getY(),
+                                         updirection.getZ(),
+                                         1);
+            rotateCamera(rotationmatrix);
+            System.out.println("ROTATE_LEFT________________");
+        }
+        if (key == KeyEvent.VK_J){
+            Multipliable rotationmatrix
+                    = new RotationMatrix(viewfrom.getX(),
+                                         viewfrom.getY(),
+                                         viewfrom.getZ(),
+                                         sidevector.getX(),
+                                         sidevector.getY(),
+                                         sidevector.getZ(),
+                                         1);
+            System.out.println("ROTATE_UP________________");
+            rotateCamera(rotationmatrix);
+        }
+        if (key == KeyEvent.VK_K){
+            Multipliable rotationmatrix
+                    = new RotationMatrix(viewfrom.getX(),
+                                         viewfrom.getY(),
+                                         viewfrom.getZ(),
+                                         sidevector.getX(),
+                                         sidevector.getY(),
+                                         sidevector.getZ(),
+                                         -1);
+            System.out.println("ROTATE_DOWN________________");
+            rotateCamera(rotationmatrix);
+        }
+        if (key == KeyEvent.VK_H){
+            Multipliable rotationmatrix
+                    = new RotationMatrix(viewfrom.getX(),
+                                         viewfrom.getY(),
+                                         viewfrom.getZ(),
+                                         updirection.getX(),
+                                         updirection.getY(),
+                                         updirection.getZ(),
+                                         -1);
+            System.out.println("ROTATE_RIGHT________________");
+            rotateCamera(rotationmatrix);
         }
     }
 
@@ -103,28 +173,4 @@ public class Camera implements KeyListener, MouseListener, MouseMotionListener{
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
 }
