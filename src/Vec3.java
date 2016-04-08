@@ -1,16 +1,19 @@
 /**
  * Created by habospace on 25/03/16.
  */
-public class Vec3 extends Vec2{
+public class Vec3 {
 
     private static double index = 1;
+    private double X;
+    private double Y;
     private double Z;
     private  double w;
 
     public Vec3(double x,
                 double y,
                 double z){
-        super(x, y);
+        this.X = x;
+        this.Y = y;
         this.Z = z;
         this.w = index;
     }
@@ -19,14 +22,16 @@ public class Vec3 extends Vec2{
                 double y,
                 double z,
                 double w){
-        super(x, y);
+        this.X = x;
+        this.Y = y;
         this.Z = z;
         this.w = w;
 
     }
 
     public Vec3(){
-        super();
+        this.X = 0;
+        this.Y = 0;
         this.Z = 0;
         this.w = index;
     }
@@ -34,14 +39,16 @@ public class Vec3 extends Vec2{
     public void updateAbsLocation(double x,
                                   double y,
                                   double z){
-        super.updateAbsLocation(x, y);
+        X = x;
+        Y = y;
         Z = z;
     }
 
     public void updateRelLocation(double deltaX,
                                   double deltaY,
                                   double deltaZ){
-        super.updateRelLocation(deltaX, deltaY);
+        X += deltaX;
+        Y += deltaY;
         Z += deltaZ;
     }
 
@@ -60,6 +67,14 @@ public class Vec3 extends Vec2{
         return (X * vec.getX() + Y * vec.getY() + Z * vec.getZ());
     }
 
+    public  double getX(){
+        return X;
+    }
+
+    public double getY(){
+        return Y;
+    }
+
     public double getZ(){
         return Z;
     }
@@ -69,7 +84,8 @@ public class Vec3 extends Vec2{
     }
 
     public void print(){
-        super.print();
+        System.out.println("X = "+X);
+        System.out.println("Y = "+Y);
         System.out.println("Z = "+Z);
         System.out.println("w = "+w);
     }
