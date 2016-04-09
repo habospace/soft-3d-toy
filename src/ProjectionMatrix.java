@@ -23,6 +23,6 @@ public class ProjectionMatrix extends TransformationMatrix {
         matrix[0][0] = matrix[1][1] / aspect;
         matrix[2][2] = -(farZ + nearZ) / (farZ - nearZ);
         matrix[2][3] = (2 * farZ * nearZ) / (farZ - nearZ);
-        matrix[3][2] = 1;
+        matrix[3][2] = -1;
     }
 }

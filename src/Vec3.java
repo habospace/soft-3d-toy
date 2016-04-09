@@ -36,20 +36,10 @@ public class Vec3 {
         this.w = index;
     }
 
-    public void updateAbsLocation(double x,
-                                  double y,
-                                  double z){
-        X = x;
-        Y = y;
-        Z = z;
-    }
-
-    public void updateRelLocation(double deltaX,
-                                  double deltaY,
-                                  double deltaZ){
-        X += deltaX;
-        Y += deltaY;
-        Z += deltaZ;
+    public Vec3 add(Vec3 vec){
+        return new Vec3(X + vec.getX(),
+                        Y + vec.getY(),
+                        Z + vec.getZ());
     }
 
     public Vec3 normalize(){

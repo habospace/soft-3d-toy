@@ -19,8 +19,6 @@ public class Test {
         TranslationMatrix matrix1 = new TranslationMatrix(1, 2, 3);
         matrix1.printMatrix();
         System.out.println();
-        RotationMatrix matrix2 = new RotationMatrix(0, 0, 0, 0, 0, 1, 360);
-        matrix2.printMatrix();
         System.out.println();
         ProjectionMatrix matrix3 = new ProjectionMatrix();
         matrix3.printMatrix();
@@ -46,6 +44,19 @@ public class Test {
         //vector3.print();
         //Vec3 vector4 = vector2.crossProduct(vector1);
         //vector4.print();
+        Vec3 vector9 = new Vec3(0, 0, 1);
+        Vec3 vector10 = new Vec3(0, 0, -1);
+        Multipliable projectionmatrix = new ProjectionMatrix();
+        Vec3 projvector1 = projectionmatrix.multiplyByVector(vector9);
+        Vec3 projvector2 = projectionmatrix.multiplyByVector(vector10);
+        double projx1 = (projvector1.getX() / projvector2.getW()*300/2)+300/2;
+        double projy1 = (projvector1.getY() / projvector2.getW()*300/2)+300/2;
+        double projx2 = (projvector2.getX() / projvector2.getW()*300/2)+300/2;
+        double projy2 = (projvector2.getY() / projvector2.getW()*300/2)+300/2;
+        System.out.println("X1 = "+projx1+" Y1 = "+projy1);
+        projvector1.print();
+        System.out.println("X2 = "+projx2+" Y2 = "+projy2);
+        projvector2.print();
 
 
     }

@@ -12,11 +12,11 @@ public class TransformationMatrix implements Multipliable {
         makeIdentityMatrix();
     }
 
-    private TransformationMatrix(double[][] matrix){
+    public TransformationMatrix(double[][] matrix){
         makeMatrixFromArray(matrix);
     }
 
-    private void makeIdentityMatrix(){
+    protected void makeIdentityMatrix(){
         for(int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
                 if (i == j){

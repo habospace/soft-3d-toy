@@ -4,23 +4,41 @@ import java.lang.Math;
  * Created by habospace on 27/03/16.
  */
 
-public class RotationMatrix extends TransformationMatrix  {
+public class RotationMatrix extends TransformationMatrix{
 
-    public RotationMatrix(double x1, double y1,
-                          double z1, double x2,
-                          double y2, double z2,
+    public RotationMatrix(Vec3 vec1,
+                          Vec3 vec2,
                           double theta){
-        makeMatrix(x1, y1, z1, x2, y2, z2, theta);
+        arbitraryAxis1(vec1, vec2, theta);
     }
 
-    private void makeMatrix(double a, double b,
-                            double c, double uUn,
-                            double vUn, double wUn,
-                            double theta){
-        double l = getLength(uUn, vUn, wUn);
-        double u = uUn/l;
-        double v = vUn/l;
-        double w = wUn/l;
+    public RotationMatrix(int choice,
+                          double theta){
+        if (choice == 0){
+            Xaxis(theta);
+        }
+        else if (choice == 1){
+            Yaxis(theta);
+        }
+        else if (choice == 2){
+            Zaxis(theta);
+        }
+        else{
+            System.out.println("Out of Range (0-2) where 0 = X / 1 = Y / 2 = Z");
+        }
+
+    }
+
+    private void arbitraryAxis1(Vec3 vec1,
+                                Vec3 vec2,
+                                double theta){
+        double a = vec1.getX();
+        double b = vec1.getY();
+        double c = vec1.getZ();
+        Vec3 normvec = vec2.normalize();
+        double u = normvec.getX();
+        double v = normvec.getY();
+        double w = normvec.getZ();
         double u2 = u*u;
         double v2 = v*v;
         double w2 = w*w;
@@ -49,9 +67,51 @@ public class RotationMatrix extends TransformationMatrix  {
         matrix[3][3] = 1;
     }
 
-    private double getLength(double x,
-                             double y,
-                             double z){
-        return Math.sqrt(x*x + y*y + z*z);
+    private void arbitraryAxe2(double theta, Vec3 vec){
+        makeIdentityMatrix();
+        Vec3 axe = vec.normalize();
+        double X = axe.getX();
+        double Y = axe.getY();
+        double Z = axe.getZ();
+        double thetaRad = Math.toRadians(theta);
+        double c = Math.cos(thetaRad);
+        double s = Math.sin(thetaRad);
+        double t = 1 - c;
+        matrix[0][0] = (t*X*X)+c;
+        matrix[0][1] = (t*X*Y) + (s*Z);
+        matrix[0][2] = (t*X*Z) - (s*Y);
+        matrix[1][0] = (t*X*Y) - (s*Z);
+        matrix[1][1] = (t*Y*Y) + c;
+        matrix[1][2] = (t*Y*Z) + (s*Z);
+        matrix[2][0] = (t*X*Y) + (s*Y);
+        matrix[2][1] = (t*Y*Z) - (s*X);
+        matrix[2][2] = (t*Z*Z) + c;
+    }
+
+    private void Xaxis(double theta){
+        makeIdentityMatrix();
+        double thetaRad = Math.toRadians(theta);
+        matrix[1][1] = Math.cos(thetaRad);
+        matrix[1][2] = -Math.sin(thetaRad);
+        matrix[2][1] = Math.sin(thetaRad);
+        matrix[2][2] = Math.cos(thetaRad);
+    }
+
+    private void Yaxis(double theta){
+        makeIdentityMatrix();
+        double thetaRad  = Math.toRadians(theta);
+        matrix[0][0] = Math.cos(thetaRad);
+        matrix[0][2] = Math.sin(thetaRad);
+        matrix[2][0] = -Math.sin(thetaRad);
+        matrix[2][2] = Math.cos(thetaRad);
+    }
+
+    private void Zaxis(double theta){
+        makeIdentityMatrix();
+        double thetaRad = Math.toRadians(theta);
+        matrix[0][0] = Math.cos(thetaRad);
+        matrix[0][1] = -Math.sin(thetaRad);
+        matrix[1][0] = Math.sin(thetaRad);
+        matrix[1][1] = Math.cos(thetaRad);
     }
 }

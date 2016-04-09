@@ -6,20 +6,17 @@ public class Mesh {
     private int verticescount;
     private Vec3[] vertices;
     private Edge[] edges;
-    private Vec3 centre;
 
     public Mesh(int verticescount, Vec3 centre){
         this.verticescount = verticescount;
         this.vertices = new Vec3[verticescount];
         this.edges = new Edge[calculateMaximumLines(verticescount)];
-        this.centre = centre;
     }
 
     public Mesh(){
         this.verticescount = 8;
         this.vertices = new Vec3[verticescount];
         this.edges = new Edge[12];
-        this.centre = new Vec3(0, 0, 55);
         addVertex(new Vec3(5, -5, -50), 0);
         addVertex(new Vec3(-5, -5, -50), 1);
         addVertex(new Vec3(-5, 5, -50), 2);
@@ -84,10 +81,6 @@ public class Mesh {
 
     public Edge[] getEdges(){
         return edges;
-    }
-
-    public Vec3 getCentre(){
-        return centre;
     }
 
 }

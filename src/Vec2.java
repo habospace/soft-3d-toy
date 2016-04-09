@@ -4,8 +4,9 @@ import java.lang.Math;
  */
 public class Vec2 {
 
-    protected double X;
-    protected double Y;
+    private final double X;
+    private final double Y;
+    private boolean onscreen;
 
     public Vec2(double x,
                 double y){
@@ -18,16 +19,18 @@ public class Vec2 {
         this.Y = 0;
     }
 
-    public void updateAbsLocation(double x,
-                                  double y){
-        X = x;
-        Y = y;
+    public void checkOnScreen(double w){
+        if(0 < w){
+            this.onscreen = true;
+        }
+        else{
+            this.onscreen = false;
+        }
     }
 
-    public void updateRelLocation(double deltaX,
-                                  double deltaY){
-        X += deltaX;
-        Y += deltaY;
+    public Vec2 add(Vec2 vec){
+        return new Vec2(X + vec.getX(),
+                        Y + vec.getY());
     }
 
     public Vec2 normalize(){
@@ -45,6 +48,10 @@ public class Vec2 {
 
     public double getY(){
         return Y;
+    }
+
+    public boolean isOnScreen(){
+        return onscreen;
     }
 
     public void print(){
