@@ -1,13 +1,12 @@
-/**
- * Created by habospace on 25/03/16.
- */
-public class Vec3 {
+import  java.lang.Math;
 
-    private static double index = 1;
-    private double X;
-    private double Y;
-    private double Z;
-    private  double w;
+public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
+
+    private final static double index = 1;
+    private final double X;
+    private final double Y;
+    private final double Z;
+    private final double W;
 
     public Vec3(double x,
                 double y,
@@ -15,7 +14,7 @@ public class Vec3 {
         this.X = x;
         this.Y = y;
         this.Z = z;
-        this.w = index;
+        this.W = index;
     }
 
     public Vec3(double x,
@@ -25,26 +24,7 @@ public class Vec3 {
         this.X = x;
         this.Y = y;
         this.Z = z;
-        this.w = w;
-
-    }
-
-    public Vec3(){
-        this.X = 0;
-        this.Y = 0;
-        this.Z = 0;
-        this.w = index;
-    }
-
-    public Vec3 add(Vec3 vec){
-        return new Vec3(X + vec.getX(),
-                        Y + vec.getY(),
-                        Z + vec.getZ());
-    }
-
-    public Vec3 normalize(){
-        double magnitude = Math.sqrt((X*X) + (Y*Y) + (Z*Z));
-        return new Vec3(X/magnitude, Y/magnitude, Z/magnitude);
+        this.W = w;
     }
 
     public Vec3 crossProduct(Vec3 vec){
@@ -53,11 +33,44 @@ public class Vec3 {
                         X * vec.getY() - Y * vec.getX());
     }
 
-    public double dotProduct (Vec3 vec){
-        return (X * vec.getX() + Y * vec.getY() + Z * vec.getZ());
+    @Override
+    public Vec3 add(Vec3 vec){
+        return new Vec3(X + vec.getX(),
+                        Y + vec.getY(),
+                        Z + vec.getZ());
     }
 
-    public  double getX(){
+    @Override
+    public Vec3 normalize(){
+        double magnitude = Math.sqrt((X*X) + (Y*Y) + (Z*Z));
+        return new Vec3(X/magnitude,
+                        Y/magnitude,
+                        Z/magnitude);
+    }
+
+    @Override
+    public double dotProduct (Vec3 vec){
+        return (X*vec.getX() + Y*vec.getY() + Z*vec.getZ());
+    }
+
+    @Override
+    public Vec3 multiplyByMatrix(Matrix3X3 transmat) {
+        double[][] matrix = transmat.getMatrix();
+        double[] multipliedvector = new double[Matrix3X3.matrixheight];
+        for (int i = 0; i < Matrix3X3.matrixheight; i++){
+            double v0 = matrix[i][0] * X;
+            double v1 = matrix[i][1] * Y;
+            double v2 = matrix[i][2] * Z;
+            double v3 = matrix[i][3] * W;
+            multipliedvector[i] = v0 + v1 + v2 + v3;
+        }
+        return new Vec3(multipliedvector[0],
+                        multipliedvector[1],
+                        multipliedvector[2],
+                        multipliedvector[3]);
+    }
+
+    public double getX(){
         return X;
     }
 
@@ -70,13 +83,13 @@ public class Vec3 {
     }
 
     public double getW(){
-        return w;
+        return W;
     }
 
     public void print(){
         System.out.println("X = "+X);
         System.out.println("Y = "+Y);
         System.out.println("Z = "+Z);
-        System.out.println("w = "+w);
+        System.out.println("W = "+ W);
     }
 }

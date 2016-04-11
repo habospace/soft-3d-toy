@@ -1,13 +1,10 @@
-/**
- * Created by habospace on 25/03/16.
- */
 public class Mesh {
 
-    private int verticescount;
-    private Vec3[] vertices;
-    private Edge[] edges;
+    private final int verticescount;
+    private final Vec3[] vertices;
+    private final Edge[] edges;
 
-    public Mesh(int verticescount, Vec3 centre){
+    public Mesh(int verticescount){
         this.verticescount = verticescount;
         this.vertices = new Vec3[verticescount];
         this.edges = new Edge[calculateMaximumLines(verticescount)];
@@ -43,7 +40,8 @@ public class Mesh {
         return (verticescount*(verticescount -1))/2;
     }
 
-    public void addVertex(Vec3 vertex, int index){
+    public void addVertex(Vec3 vertex,
+                          int index){
         try {
             vertices[index] = vertex;
         }
@@ -52,18 +50,21 @@ public class Mesh {
         }
     }
 
-    public void addEdge(int vertex1, int vertex2, int index){
+    public void addEdge(int vertex1,
+                        int vertex2,
+                        int index){
         try{
-            edges[index] = new Edge(vertex1, vertex2);
+            edges[index] = new Edge(vertex1,
+                                    vertex2);
         }
         catch (ArrayIndexOutOfBoundsException error){
             System.out.println("Exception thrown :" + error);
         }
     }
 
-    public void move(Multipliable matrix){
+    public void move(Matrix3X3 matrix){
         for(int i = 0; i < verticescount; i++){
-           vertices[i] = matrix.multiplyByVector(vertices[i]);
+           vertices[i] = vertices[i].multiplyByMatrix(matrix);
         }
     }
 

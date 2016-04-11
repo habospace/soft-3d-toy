@@ -1,19 +1,12 @@
-/**
- * Created by habospace on 02/04/16.
- */
 public class Edge {
 
-    private int vertex1;
-    private int vertex2;
+    private final int vertex1;
+    private final int vertex2;
 
-    public Edge(int vertex1, int vertex2){
+    public Edge(int vertex1,
+                int vertex2){
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
-    }
-
-    public int[] getVertexPair(){
-        int[] vertices = {vertex1, vertex2};
-        return vertices;
     }
 
     public int getVertex1(){

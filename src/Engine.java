@@ -8,11 +8,11 @@ import java.util.HashMap;
 
 public class Engine extends JPanel implements ActionListener, KeyListener{
 
-    private Camera camera;
-    private HashMap<Mesh, Vec2[]> meshes = new HashMap<>();
-    private Multipliable projectionmatrix = new ProjectionMatrix();
-    private int frameheight;
-    private int framewidth;
+    private final Camera camera;
+    private final HashMap<Mesh, Vec2[]> meshes = new HashMap<>();
+    private final Matrix3X3 projectionmatrix = new ProjectionMatrix();
+    private final int frameheight;
+    private final int framewidth;
     Timer timer;
 
     public Engine(Camera camera,
@@ -59,7 +59,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
             for (Edge edge : mesh.getEdges()){
                 Vec2 point1 = projectedVertices[edge.getVertex1()];
                 Vec2 point2 = projectedVertices[edge.getVertex2()];
-                if (point1.isOnScreen() && point2.isOnScreen()){
+                if (isOnScreen(point1.getW()) && isOnScreen(point2.getW())){
                     drawLine(point1, point2, graphics);
                 }
             }
@@ -99,12 +99,19 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         graphics.drawLine(x1, y1, x1, y1);
     }
 
+    private boolean isOnScreen(double w){
+        if (0 <= w){
+            return true;
+        }
+        return false;
+    }
+
     private void render(){
-        Multipliable Xrotation = new RotationMatrix(0, camera.getXrotation());
-        Multipliable Yrotation = new RotationMatrix(1, camera.getYrotation());
-        Multipliable translation = new TranslationMatrix(-camera.getSidewardMovement(), 0,
-                                                         -camera.getForwardMovement());
-        Multipliable transformationMatrix = Xrotation.multiplyByMatrix(Yrotation).multiplyByMatrix(translation);
+        Matrix3X3 Xrotation = new XaxisRotationMatrix(camera.getXrotation());
+        Matrix3X3 Yrotation = new YaxisRotationMatrix(camera.getYrotation());
+        Matrix3X3 translation = new TranslationMatrix(-camera.getSidewardMovement(), 0,
+                                                      -camera.getForwardMovement());
+        Matrix3X3 transformationMatrix = Xrotation.multiplyByMatrix(Yrotation).multiplyByMatrix(translation);
 
         for (Mesh mesh : meshes.keySet()){
             Vec3[] vertices = mesh.getVertices();
@@ -113,11 +120,10 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
                 vertices[i] = transformationMatrix.multiplyByVector(vertices[i]);
                 Vec3 projvector = projectionmatrix.multiplyByVector(vertices[i]);
 
-                double projx = (projvector.getX() / projvector.getW()*framewidth / 2) + framewidth/2;
-                double projy = (projvector.getY() / projvector.getW()*frameheight / 2) + frameheight/2;
+                double projx = (projvector.getX() / projvector.getW()*framewidth/2) + framewidth/2;
+                double projy = (projvector.getY() / projvector.getW()*frameheight/2) + frameheight/2;
 
-                Vec2 pixel = new Vec2(projx, projy);
-                pixel.checkOnScreen(projvector.getW());
+                Vec2 pixel = new Vec2(projx, projy, projvector.getW());
                 meshes.get(mesh)[i] = pixel;
             }
         }
@@ -145,16 +151,16 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
             camera.moveLeft();
         }
         if (key == KeyEvent.VK_L){
-            camera.rotateYpos();
+            camera.rotateYaxisAtPositive();
         }
         if (key == KeyEvent.VK_J){
-            camera.rotateXpos();
+            camera.rotateXaxisAtPositive();
         }
         if (key == KeyEvent.VK_K){
-            camera.rotateXneg();
+            camera.rotateXaxisAtNegative();
         }
         if (key == KeyEvent.VK_H){
-            camera.rotateYneg();
+            camera.rotateYaxisAtNegative();
         }
     }
 
@@ -189,7 +195,10 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE){
+            stopEngine();
+        }
     }
 
     public static void main(String[] args){

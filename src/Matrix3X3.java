@@ -1,19 +1,41 @@
-
-/**
- * Created by habospace on 28/03/16.
- */
-public class TransformationMatrix implements Multipliable {
+public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatrix<Matrix3X3, Matrix3X3> {
 
     protected static final int matrixheight = 4;
     protected static final int matrixwidth = 4;
-    protected double[][] matrix = new double[matrixheight][matrixwidth];
+    protected final double[][] matrix = new double[matrixheight][matrixwidth];
 
-    public TransformationMatrix(){
+    public Matrix3X3(){
         makeIdentityMatrix();
     }
 
-    public TransformationMatrix(double[][] matrix){
-        makeMatrixFromArray(matrix);
+    public Matrix3X3(double[][] array){
+        makeMatrixFromArray(array);
+    }
+
+    public static XaxisRotationMatrix constructXaxisRotationMatrix(double theta){
+        return new XaxisRotationMatrix(theta);
+    }
+
+    public static YaxisRotationMatrix constructYaxisRotationMatrix(double theta){
+        return new YaxisRotationMatrix(theta);
+    }
+
+    public static TranslationMatrix constructTranslationMatrix(double x,
+                                                               double y,
+                                                               double z){
+        return new TranslationMatrix(x, y, z);
+    }
+
+    public static ProjectionMatrix constructProjectionMatrix(){
+        return new ProjectionMatrix();
+    }
+
+    public static Matrix3X3 constructIdentityMatrix(){
+        return new Matrix3X3();
+    }
+
+    public static Matrix3X3 constructMatrixFromArray(double[][] array){
+        return new Matrix3X3(array);
     }
 
     protected void makeIdentityMatrix(){
@@ -65,13 +87,23 @@ public class TransformationMatrix implements Multipliable {
         }
     }
 
-    public void printMatrix(){
-        for(int i = 0; i < matrixheight; i++){
-            System.out.println();
+    @Override
+    public Matrix3X3 multiplyByMatrix(Matrix3X3 othermatrix) {
+        double[][] transmatrix = othermatrix.getMatrix();
+        double[][] tempmatrix = new double[matrixheight][matrixwidth];
+        for (int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
-                System.out.print(matrix[i][j]+" ");
+                tempmatrix[i][j] = 0;
             }
         }
+        for (int i = 0; i < matrixheight; i++){
+            for (int j = 0; j < matrixwidth; j++){
+                for (int k = 0; k < matrixheight; k++){
+                    tempmatrix[i][j] += (matrix[i][k]*transmatrix[k][j]);
+                }
+            }
+        }
+        return new Matrix3X3(tempmatrix);
     }
 
     @Override
@@ -90,27 +122,16 @@ public class TransformationMatrix implements Multipliable {
                         multipliedvector[3]);
     }
 
-    @Override
-    public TransformationMatrix multiplyByMatrix(Multipliable transmat) {
-        double[][] transmatrix = transmat.getMultipliableMatrix();
-        double[][] tempmatrix = new double[matrixheight][matrixwidth];
-        for (int i = 0; i < matrixheight; i++){
+    public void printMatrix(){
+        for(int i = 0; i < matrixheight; i++){
+            System.out.println();
             for (int j = 0; j < matrixwidth; j++){
-                tempmatrix[i][j] = 0;
+                System.out.print(matrix[i][j]+" ");
             }
         }
-        for (int i = 0; i < matrixheight; i++){
-            for (int j = 0; j < matrixwidth; j++){
-                for (int k = 0; k < matrixheight; k++){
-                    tempmatrix[i][j] += (matrix[i][k]*transmatrix[k][j]);
-                }
-            }
-        }
-        return new TransformationMatrix(tempmatrix);
     }
 
-    @Override
-    public double[][] getMultipliableMatrix(){
+    public double[][] getMatrix(){
         return matrix;
     }
 }

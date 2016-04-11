@@ -1,45 +1,42 @@
 import java.lang.Math;
-/**
- * Created by habospace on 01/04/16.
- */
-public class Vec2 {
 
+public class Vec2 implements Vec<Vec2> {
+
+    private final static double index = 1;
     private final double X;
     private final double Y;
-    private boolean onscreen;
+    private final double W;
 
     public Vec2(double x,
                 double y){
         this.X = x;
         this.Y = y;
+        this.W = index;
     }
 
-    public Vec2(){
-        this.X = 0;
-        this.Y = 0;
+    public Vec2(double x,
+                double y,
+                double w){
+        this.X = x;
+        this.Y = y;
+        this.W = w;
     }
 
-    public void checkOnScreen(double w){
-        if(0 < w){
-            this.onscreen = true;
-        }
-        else{
-            this.onscreen = false;
-        }
-    }
-
+    @Override
     public Vec2 add(Vec2 vec){
         return new Vec2(X + vec.getX(),
                         Y + vec.getY());
     }
 
+    @Override
     public Vec2 normalize(){
         double magnitude = Math.sqrt((X*X) + (Y*Y));
         return new Vec2(X/magnitude, Y/magnitude);
     }
 
-    public double crossProduct(Vec2 vec){
-        return (X * vec.getY() - Y * vec.getX());
+    @Override
+    public double dotProduct(Vec2 vec){
+        return (X*vec.getX() + Y*vec.getY());
     }
 
     public double getX(){
@@ -50,8 +47,8 @@ public class Vec2 {
         return Y;
     }
 
-    public boolean isOnScreen(){
-        return onscreen;
+    public double getW(){
+        return W;
     }
 
     public void print(){

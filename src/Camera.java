@@ -1,6 +1,3 @@
-/**
- * Created by habospace on 09/04/16.
- */
 public class Camera {
 
     private double Xrotation;
@@ -25,19 +22,19 @@ public class Camera {
         this.sideward = 0;
     }
 
-    public void rotateXpos(){
+    public void rotateXaxisAtPositive(){
         Xrotation = 1;
     }
 
-    public  void rotateXneg(){
+    public  void rotateXaxisAtNegative(){
         Xrotation = -1;
     }
 
-    public void rotateYpos(){
+    public void rotateYaxisAtPositive(){
         Yrotation = 1;
     }
 
-    public void rotateYneg(){
+    public void rotateYaxisAtNegative (){
         Yrotation = -1;
     }
 

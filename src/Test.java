@@ -1,12 +1,10 @@
 import java.lang.Math;
-/**
- * Created by habospace on 25/03/16.
- */
+
 public class Test {
 
     public static void main (String[] args){
 
-        Mesh cube = new Mesh(8, new Vec3(0, 0, 0));
+        Mesh cube = new Mesh(8);
         cube.addVertex(new Vec3(-1, 1, 1), 0);
         cube.addVertex(new Vec3(1, 1, 1), 1);
         cube.addVertex(new Vec3(-1, -1, 1), 2);
@@ -30,14 +28,14 @@ public class Test {
         System.out.println();
         System.out.println();
         System.out.println(Math.toRadians(45));
-        Multipliable matrix4 = new TranslationMatrix(1, 1, 1);
+        MultipliableByMatrix matrix4 = new TranslationMatrix(1, 1, 1);
         Vec3 vector5 = new Vec3(2, 2, -3);
         Vec3 vector6 = new Vec3(2, -1, -6);
-        Multipliable lookmat = new LookAtMatrix(new Vec3(0, 0, 0), new Vec3(-2, 1, 3), new Vec3(0, 1, 0));
-        Vec3 vector7 = lookmat.multiplyByVector(vector5);
-        vector7.print();
-        Vec3 vector8 = lookmat.multiplyByVector(vector6);
-        vector8.print();
+        //MultipliableByMatrix lookmat = new LookAtMatrix(new Vec3(0, 0, 0), new Vec3(-2, 1, 3), new Vec3(0, 1, 0));
+        //Vec3 vector7 = lookmat.multiplyByVector(vector5);
+        //vector7.print();
+        //Vec3 vector8 = lookmat.multiplyByVector(vector6);
+        //vector8.print();
         //Vec3 vector1 = new Vec3(0, 15, 0);
         //Vec3 vector2 = new Vec3(0, 0, 132);
         //Vec3 vector3 = vector1.crossProduct(vector2);
@@ -46,7 +44,7 @@ public class Test {
         //vector4.print();
         Vec3 vector9 = new Vec3(0, 0, 1);
         Vec3 vector10 = new Vec3(0, 0, -1);
-        Multipliable projectionmatrix = new ProjectionMatrix();
+        Matrix3X3 projectionmatrix = new ProjectionMatrix();
         Vec3 projvector1 = projectionmatrix.multiplyByVector(vector9);
         Vec3 projvector2 = projectionmatrix.multiplyByVector(vector10);
         double projx1 = (projvector1.getX() / projvector2.getW()*300/2)+300/2;
@@ -57,7 +55,5 @@ public class Test {
         projvector1.print();
         System.out.println("X2 = "+projx2+" Y2 = "+projy2);
         projvector2.print();
-
-
     }
 }
