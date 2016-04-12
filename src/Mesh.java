@@ -83,5 +83,4 @@ public class Mesh {
     public Edge[] getEdges(){
         return edges;
     }
-
 }

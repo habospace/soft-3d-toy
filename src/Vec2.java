@@ -23,7 +23,7 @@ public class Vec2 implements Vec<Vec2> {
     }
 
     @Override
-    public Vec2 add(Vec2 vec){
+    public Vec2 addVector(Vec2 vec){
         return new Vec2(X + vec.getX(),
                         Y + vec.getY());
     }

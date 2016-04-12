@@ -1,6 +1,6 @@
 public interface Vec<V>{
 
-    public V add(V other);
+    public V addVector(V other);
 
     public double dotProduct(V other);
 

@@ -45,6 +45,26 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         drawLines(graphics);
     }
 
+    public void rasterize(Vec2 point1,
+                          Vec2 point2,
+                          Vec2 point3,
+                          Graphics graphics){
+        double invSlope1 = (point2.getX()-point1.getX())
+                         / (point2.getY()-point1.getY());
+        double invSlope2 = (point3.getX()-point1.getX())
+                         / (point3.getY()-point1.getY());
+        double curx1 = point1.getX();
+        double curx2 = point1.getX();
+        for (int Y = (int) point1.getY(); Y > point2.getY(); Y-=1){
+            Vec2 pixel1 = new Vec2(curx1, Y);
+            Vec2 pixel2 = new Vec2(curx2, Y);
+            drawLine(pixel1, pixel2, graphics);
+            curx1 += invSlope1;
+            curx2 += invSlope2;
+        }
+
+    }
+
     private void drawPoints(Graphics graphics){
         for (Mesh mesh : meshes.keySet()){
             for (Vec2 point : meshes.get(mesh)){

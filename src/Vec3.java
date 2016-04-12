@@ -34,7 +34,7 @@ public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
     }
 
     @Override
-    public Vec3 add(Vec3 vec){
+    public Vec3 addVector(Vec3 vec){
         return new Vec3(X + vec.getX(),
                         Y + vec.getY(),
                         Z + vec.getZ());
@@ -90,6 +90,6 @@ public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
         System.out.println("X = "+X);
         System.out.println("Y = "+Y);
         System.out.println("Z = "+Z);
-        System.out.println("W = "+ W);
+        System.out.println("W = "+W);
     }
 }
