@@ -39,82 +39,110 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         meshes.put(mesh, new Vec2[mesh.getVerticesCount()]);
     }
 
-    public void paintComponent(Graphics graphics){
-        super.paintComponent(graphics);
-        graphics.setColor(Color.BLACK);
-        drawLines(graphics);
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.BLUE);
+        drawTriangles(g);
     }
 
-    public void rasterize(Vec2 point1,
-                          Vec2 point2,
-                          Vec2 point3,
-                          Graphics graphics){
-        double invSlope1 = (point2.getX()-point1.getX())
-                         / (point2.getY()-point1.getY());
-        double invSlope2 = (point3.getX()-point1.getX())
-                         / (point3.getY()-point1.getY());
-        double curx1 = point1.getX();
-        double curx2 = point1.getX();
-        for (int Y = (int) point1.getY(); Y > point2.getY(); Y-=1){
-            Vec2 pixel1 = new Vec2(curx1, Y);
-            Vec2 pixel2 = new Vec2(curx2, Y);
-            drawLine(pixel1, pixel2, graphics);
-            curx1 += invSlope1;
-            curx2 += invSlope2;
-        }
-
-    }
-
-    private void drawPoints(Graphics graphics){
-        for (Mesh mesh : meshes.keySet()){
-            for (Vec2 point : meshes.get(mesh)){
-                putPixel(point, graphics);
-            }
-        }
-    }
-
-    private void drawLines(Graphics graphics){
+    private void drawTriangles(Graphics g){
         for (Mesh mesh : meshes.keySet()){
             Vec2[] projectedVertices = meshes.get(mesh);
-            for (Edge edge : mesh.getEdges()){
-                Vec2 point1 = projectedVertices[edge.getVertex1()];
-                Vec2 point2 = projectedVertices[edge.getVertex2()];
-                if (isOnScreen(point1.getW()) && isOnScreen(point2.getW())){
-                    drawLine(point1, point2, graphics);
+            for (Triangle face : mesh.getFaces()){
+                Vec2 point1 = projectedVertices[face.getVertex1()];
+                Vec2 point2 = projectedVertices[face.getVertex2()];
+                Vec2 point3 = projectedVertices[face.getVertex3()];
+                if (isOnScreen(point1.getW()) &&
+                        isOnScreen(point2.getW()) &&
+                        isOnScreen(point3.getW())){
+                    drawTriangle(point1, point2, point3, g);
                 }
             }
         }
     }
 
-    private void drawLine(Vec2 point1,
-                          Vec2 point2,
-                          Graphics graphics){
-        int x1 = (int) point1.getX();
-        int y1 = (int) point1.getY();
-        int x2 = (int) point2.getX();
-        int y2 = (int) point2.getY();
-        int dx = Math.abs(x2 - x1);
-        int dy = Math.abs(y2 - y1);
-        int sx = (x1 < x2) ? 1 : -1;
-        int sy = (y1 < y2) ? 1 : -1;
-        int err = dx - dy;
-        while (true) {
-            putPixel(new Vec2(x1, y1), graphics);
-            if ((x1 == x2) && (y1 == y2)){
-                break;
+    private void drawTriangle(Vec2 p1, Vec2 p2,
+                              Vec2 p3, Graphics g){
+
+        if (p1.getY() > p2.getY()){
+            Vec2 temp = p2;
+            p2 = p1;
+            p1 = temp;
+        }
+        if (p2.getY() > p3.getY()){
+            Vec2 temp = p2;
+            p2 = p3;
+            p3 = temp;
+        }
+        if (p1.getY() > p2.getY()){
+            Vec2 temp = p2;
+            p2 = p1;
+            p1 = temp;
+        }
+
+        double dP1P2, dP1P3;
+
+        if (p2.getY() - p1.getY() > 0){
+            dP1P2 = (p2.getX() - p1.getX()) / (p2.getY() - p1.getY());
+        }
+        else {
+            dP1P2 = 0;
+        }
+        if (p3.getY() - p1.getY() > 0){
+            dP1P3 = (p3.getX() - p1.getX()) / (p3.getY() - p1.getY());
+        }
+        else{
+            dP1P3 = 0;
+        }
+        if (dP1P2 > dP1P3){
+            for (int y = (int)p1.getY(); y <= (int)p3.getY(); y++){
+                if (y < p2.getY()){
+                    processScanLine(y, p1, p3, p1, p2, g);
+                }
+                else{
+                    processScanLine(y, p1, p3, p2, p3, g);
+                }
             }
-            int e2 = 2 * err;
-            if (e2 > -dy){
-                err -= dy; x1 += sx;
-            }
-            if (e2 < dx){
-                err += dx; y1 += sy;
+        }
+        else{
+            for (int y = (int)p1.getY(); y <= (int)p3.getY(); y++){
+                if (y < p2.getY()){
+                    processScanLine(y, p1, p2, p1, p3, g);
+                }
+                else{
+                    processScanLine(y, p2, p3, p1, p3, g);
+                }
             }
         }
     }
 
+    private double clamp(double value){
+        return Math.max(0, Math.min(value, 1));
+    }
+
+    private double interpolate(double min, double max,
+                               double gradient){
+        return min + (max - min) * clamp(gradient);
+    }
+
+    private void processScanLine(int y, Vec2 pa,
+                                 Vec2 pb, Vec2 pc,
+                                 Vec2 pd, Graphics g){
+        double gradient1 = pa.getY() != pb.getY()
+                         ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
+        double gradient2 = pc.getY() != pd.getY()
+                         ? (y - pc.getY()) / (pd.getY() - pc.getY()) : 1;
+
+        int sx = (int) interpolate(pa.getX(), pb.getX(), gradient1);
+        int ex = (int) interpolate(pc.getX(), pd.getX(), gradient2);
+
+        for (int x = sx; x < ex; x++) {
+            putPixel(new Vec2(x, y), g);
+        }
+    }
+
     private void putPixel(Vec2 point,
-                         Graphics graphics){
+                          Graphics graphics){
         int x1 = (int) point.getX(), y1 = (int) point.getY();
         graphics.drawLine(x1, y1, x1, y1);
     }

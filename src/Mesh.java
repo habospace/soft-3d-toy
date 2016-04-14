@@ -2,18 +2,18 @@ public class Mesh {
 
     private final int verticescount;
     private final Vec3[] vertices;
-    private final Edge[] edges;
+    private final Triangle[] faces;
 
     public Mesh(int verticescount){
         this.verticescount = verticescount;
         this.vertices = new Vec3[verticescount];
-        this.edges = new Edge[calculateMaximumLines(verticescount)];
+        this.faces = new Triangle[calculateMaximumLines(verticescount)];
     }
 
     public Mesh(){
         this.verticescount = 8;
         this.vertices = new Vec3[verticescount];
-        this.edges = new Edge[12];
+        this.faces = new Triangle[12];
         addVertex(new Vec3(5, -5, -50), 0);
         addVertex(new Vec3(-5, -5, -50), 1);
         addVertex(new Vec3(-5, 5, -50), 2);
@@ -22,18 +22,19 @@ public class Mesh {
         addVertex(new Vec3(-5, -5, -60), 5);
         addVertex(new Vec3(-5, 5, -60), 6);
         addVertex(new Vec3(5, 5, -60), 7);
-        addEdge(0, 1, 0);
-        addEdge(1, 2, 1);
-        addEdge(2, 3, 2);
-        addEdge(3, 0, 3);
-        addEdge(4, 5, 4);
-        addEdge(5, 6, 5);
-        addEdge(6, 7, 6);
-        addEdge(7, 4, 7);
-        addEdge(0, 4, 8);
-        addEdge(1, 5, 9);
-        addEdge(2, 6, 10);
-        addEdge(3, 7, 11);
+        addFace(new Triangle(0, 1, 3), 0);
+        addFace(new Triangle(1, 2, 3), 1);
+        addFace(new Triangle(4, 6, 7), 2);
+        addFace(new Triangle(5, 6, 7), 3);
+        addFace(new Triangle(2, 3, 7), 4);
+        addFace(new Triangle(2, 6, 7), 5);
+        addFace(new Triangle(1, 2, 4), 6);
+        addFace(new Triangle(1, 4, 5), 7);
+        addFace(new Triangle(0, 3, 7), 8);
+        addFace(new Triangle(0, 4, 7), 9);
+        addFace(new Triangle(1, 2, 6), 10);
+        addFace(new Triangle(1, 5, 6), 11);
+
     }
 
     private int calculateMaximumLines(int verticescount){
@@ -46,19 +47,17 @@ public class Mesh {
             vertices[index] = vertex;
         }
         catch (ArrayIndexOutOfBoundsException error){
-            System.out.println("Exception thrown  :" + error);
+            System.out.println("Exception thrown at: "+error);
         }
     }
 
-    public void addEdge(int vertex1,
-                        int vertex2,
+    public void addFace(Triangle face,
                         int index){
-        try{
-            edges[index] = new Edge(vertex1,
-                                    vertex2);
+        try {
+            faces[index] = face;
         }
         catch (ArrayIndexOutOfBoundsException error){
-            System.out.println("Exception thrown :" + error);
+            System.out.println("Exception thrown at: "+error);
         }
     }
 
@@ -76,11 +75,7 @@ public class Mesh {
         return verticescount;
     }
 
-    public Vec3 getVertex(int index){
-        return vertices[index];
-    }
-
-    public Edge[] getEdges(){
-        return edges;
+    public Triangle[] getFaces(){
+        return  faces;
     }
 }
