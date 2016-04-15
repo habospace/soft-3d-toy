@@ -25,6 +25,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         this.frameheight = frameheight;
         this.depthBuffer = new double[frameheight][framewidth];
         this.timer = new Timer(delay, this);
+        clearDepthBuffer();
         addKeyListener(this);
         setFocusable(true);
     }
@@ -144,8 +145,9 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         for (int x = sx; x < ex; x++) {
             double gradient = (x - sx) / (double)(ex - sx);
             double z = interpolate(z1, z2, gradient);
-            if (isCloser(x, y, z)){
-                putPixel(new Vec2(x, y), g);
+            if (isOnCanvas(x, y) && isCloser(x, y, z)){
+                putPixel(x, y, g);
+                updateDepthBuffer(x, y, z);
             }
         }
     }
@@ -164,10 +166,20 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         return false;
     }
 
-    private void putPixel(Vec2 point,
+    private boolean isOnCanvas(int x, int y){
+        if ((0 < x && x < framewidth) && (0 < y && y <frameheight)){
+            return true;
+        }
+        return false;
+    }
+
+    private void updateDepthBuffer(int x, int y, double z){
+        depthBuffer[x][y] = z;
+    }
+
+    private void putPixel(int x, int y,
                           Graphics graphics){
-        int x1 = (int) point.getX(), y1 = (int) point.getY();
-        graphics.drawLine(x1, y1, x1, y1);
+        graphics.drawLine(x, y, x, y);
     }
 
     private void render(){
@@ -205,6 +217,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
         render();
         repaint();
+        clearDepthBuffer();
     }
 
     @Override
@@ -275,12 +288,12 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
 
     public static void main(String[] args){
         Camera camera = new Camera();
-        Engine engine = new Engine(camera, 20, 500, 300);
+        Engine engine = new Engine(camera, 20, 300, 300);
         Mesh mesh1 = new Mesh();
         engine.addMesh(mesh1);
         JFrame frame = new JFrame();
         frame.setTitle("3d Engine");
-        frame.setSize(500, 300);
+        frame.setSize(300, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(engine);
