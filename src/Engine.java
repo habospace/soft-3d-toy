@@ -52,12 +52,19 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         for (Mesh mesh : meshes.keySet()){
             Vec3[] projectedVertices = meshes.get(mesh);
             for (Triangle face : mesh.getFaces()){
+
                 Vec3 point1 = projectedVertices[face.getVertex1()];
                 Vec3 point2 = projectedVertices[face.getVertex2()];
                 Vec3 point3 = projectedVertices[face.getVertex3()];
-                if (isOnScreen(point1.getW()) &&
-                        isOnScreen(point2.getW()) &&
-                        isOnScreen(point3.getW())){
+
+                boolean onScreen = (isOnScreen(point1.getW()) &&
+                                    isOnScreen(point2.getW()) &&
+                                    isOnScreen(point3.getW()));
+                boolean onCanvas = (isOnCanvas(point1.getX(), point1.getY()) &&
+                                    isOnCanvas(point2.getX(), point2.getY()) &&
+                                    isOnCanvas(point3.getX(), point3.getZ()));
+
+                if (onScreen && onCanvas){
                     drawTriangle(point1, point2, point3, g);
                 }
             }
@@ -97,6 +104,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         else{
             dP1P3 = 0;
         }
+
         if (dP1P2 > dP1P3){
             for (int y = (int)p1.getY(); y <= (int)p3.getY(); y++){
                 if (y < p2.getY()){
@@ -131,6 +139,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     private void processScanLine(int y, Vec3 pa,
                                  Vec3 pb, Vec3 pc,
                                  Vec3 pd, Graphics g){
+
         double gradient1 = pa.getY() != pb.getY()
                          ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
         double gradient2 = pc.getY() != pd.getY()
@@ -143,8 +152,10 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         double z2 = interpolate(pc.getZ(), pd.getZ(), gradient2);
 
         for (int x = sx; x < ex; x++) {
-            double gradient = (x - sx) / (double)(ex - sx);
+
+            double gradient = (x - sx) / (ex - sx);
             double z = interpolate(z1, z2, gradient);
+
             if (isOnCanvas(x, y) && isCloser(x, y, z)){
                 putPixel(x, y, g);
                 updateDepthBuffer(x, y, z);
@@ -166,7 +177,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         return false;
     }
 
-    private boolean isOnCanvas(int x, int y){
+    private boolean isOnCanvas(double x, double y){
         if ((0 < x && x < framewidth) && (0 < y && y <frameheight)){
             return true;
         }
@@ -177,9 +188,17 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         depthBuffer[x][y] = z;
     }
 
+    private void clearDepthBuffer(){
+        for (int i = 0; i < frameheight; i++){
+            for (int j = 0; j < framewidth; j++){
+                depthBuffer[i][j] = Double.NEGATIVE_INFINITY;
+            }
+        }
+    }
+
     private void putPixel(int x, int y,
-                          Graphics graphics){
-        graphics.drawLine(x, y, x, y);
+                          Graphics g){
+        g.drawLine(x, y, x, y);
     }
 
     private void render(){
@@ -201,14 +220,6 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
 
                 Vec3 pixel = new Vec3(projx, projy, projvector.getZ(), projvector.getW());
                 meshes.get(mesh)[i] = pixel;
-            }
-        }
-    }
-
-    private void clearDepthBuffer(){
-        for (int i = 0; i < frameheight; i++){
-            for (int j = 0; j < framewidth; j++){
-                depthBuffer[i][j] = Double.NEGATIVE_INFINITY;
             }
         }
     }

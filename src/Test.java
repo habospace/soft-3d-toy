@@ -55,5 +55,6 @@ public class Test {
         projvector1.print();
         System.out.println("X2 = "+projx2+" Y2 = "+projy2);
         projvector2.print();
+        System.out.println();
     }
 }
