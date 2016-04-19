@@ -232,7 +232,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W){
             camera.moveForward();
@@ -261,7 +261,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W){
             camera.setBackForwardMovement();
@@ -290,7 +290,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e){
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE){
             stopEngine();
