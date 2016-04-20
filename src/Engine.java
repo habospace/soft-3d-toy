@@ -8,6 +8,9 @@ import java.util.HashMap;
 
 public class Engine extends JPanel implements ActionListener, KeyListener{
 
+    private double drawFPS;
+    private double prevTime;
+    private int FPSchecks = 0;
     private final Camera camera;
     private final HashMap<Mesh, Vec3[]> meshes = new HashMap<>();
     private final Matrix3X3 projectionmatrix = new ProjectionMatrix();
@@ -46,6 +49,10 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         super.paintComponent(g);
         g.setColor(Color.BLUE);
         drawTriangles(g);
+        g.setColor(Color.BLACK);
+        calculateFPS();
+        g.setFont(new Font("default", Font.BOLD, 12));
+        g.drawString("FPS: "+(int)drawFPS, 130, 20);
     }
 
     private void drawTriangles(Graphics g){
@@ -221,6 +228,17 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
                 Vec3 pixel = new Vec3(projx, projy, projvector.getZ(), projvector.getW());
                 meshes.get(mesh)[i] = pixel;
             }
+        }
+    }
+
+    private void calculateFPS(){
+        FPSchecks++;
+        double currentTime = System.currentTimeMillis();
+        double newFPS = (1000 / (currentTime - prevTime));
+        prevTime = currentTime;
+        if (FPSchecks > 15){
+            drawFPS = newFPS;
+            FPSchecks = 0;
         }
     }
 
