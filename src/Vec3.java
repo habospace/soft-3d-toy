@@ -54,7 +54,7 @@ public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
     }
 
     @Override
-    public Vec3 multiplyByMatrix(Matrix3X3 transmat) {
+    public Vec3 multiplyByMatrix(Matrix3X3 transmat){
         double[][] matrix = transmat.getMatrix();
         double[] multipliedvector = new double[Matrix3X3.matrixheight];
         for (int i = 0; i < Matrix3X3.matrixheight; i++){
