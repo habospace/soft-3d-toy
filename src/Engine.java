@@ -17,6 +17,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     private final int frameheight;
     private final int framewidth;
     private final double[][] depthBuffer;
+    private final Vec3 lightSource = new Vec3(0, 0, 5);
     Timer timer;
 
     public Engine(Camera camera,
@@ -47,10 +48,13 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.BLUE);
         drawTriangles(g);
-        g.setColor(Color.BLACK);
+        drawFPS(g);
+    }
+
+    private void drawFPS(Graphics g){
         calculateFPS();
+        g.setColor(Color.black);
         g.setFont(new Font("default", Font.BOLD, 12));
         g.drawString("FPS: "+(int)drawFPS, 130, 20);
     }
@@ -69,13 +73,33 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
                                     isOnScreen(point3.getW()));
                 boolean onCanvas = (isOnCanvas(point1.getX(), point1.getY()) &&
                                     isOnCanvas(point2.getX(), point2.getY()) &&
-                                    isOnCanvas(point3.getX(), point3.getZ()));
+                                    isOnCanvas(point3.getX(), point3.getY()));
 
                 if (onScreen && onCanvas){
+
+                    int B = calculateShade(mesh.getVertex(face.getVertex1()),
+                                           mesh.getVertex(face.getVertex2()),
+                                           mesh.getVertex(face.getVertex3()));
+                    g.setColor(new Color(0, 0, B));
                     drawTriangle(point1, point2, point3, g);
                 }
             }
         }
+    }
+
+    private int calculateShade(Vec3 p1,
+                               Vec3 p2,
+                               Vec3 p3){
+        Vec3 centre = new Vec3((p1.getX()+p2.getX()+p3.getX()) / 3,
+                               (p1.getY()+p2.getY()+p3.getY()) / 3,
+                               (p1.getZ()+p2.getZ()+p3.getZ()) / 3);
+        Vec3 surfNorm = Vec3.getrSurfaceNormalVector(p1, p2, p3).normalize();
+
+        Vec3 lightDirection = new Vec3(lightSource.getX() - centre.getX(),
+                                       lightSource.getY() - centre.getY(),
+                                       lightSource.getZ() - centre.getZ()).normalize();
+
+        return (int) (Math.abs(lightDirection.dotProduct(surfNorm)) * 255);
     }
 
     private void drawTriangle(Vec3 p1, Vec3 p2,
@@ -225,7 +249,9 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
                 double projx = (projvector.getX() / projvector.getW()*framewidth/2) + framewidth/2;
                 double projy = (projvector.getY() / projvector.getW()*frameheight/2) + frameheight/2;
 
-                Vec3 pixel = new Vec3(projx, projy, projvector.getZ(), projvector.getW());
+                Vec3 pixel = new Vec3(projx, projy,
+                                      vertices[i].getZ(),
+                                      projvector.getW());
                 meshes.get(mesh)[i] = pixel;
             }
         }

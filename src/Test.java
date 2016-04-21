@@ -56,5 +56,10 @@ public class Test {
         System.out.println("X2 = "+projx2+" Y2 = "+projy2);
         projvector2.print();
         System.out.println();
+        Vec3 vecc1 = new Vec3(-2, 0,  -5).normalize();
+        Vec3 vecc2 = new Vec3(5, -0, -2).normalize();
+        double num = vecc1.dotProduct(vecc2);
+        System.out.println(num);
+        System.out.println(Math.toDegrees(Math.cosh(num)));
     }
 }

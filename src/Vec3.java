@@ -70,6 +70,21 @@ public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
                         multipliedvector[3]);
     }
 
+    public static Vec3 getrSurfaceNormalVector(Vec3 vertex1,
+                                               Vec3 vertex2,
+                                               Vec3 vertex3){
+        Vec3 side1 = new Vec3(vertex2.getX() - vertex1.getX(),
+                              vertex2.getY() - vertex1.getY(),
+                              vertex2.getZ() - vertex1.getZ());
+        Vec3 side2 = new Vec3(vertex3.getX() - vertex1.getX(),
+                              vertex3.getY() - vertex1.getY(),
+                              vertex3.getZ() - vertex1.getZ());
+
+        return new Vec3((side1.getY()*side2.getZ()) - (side1.getZ()*side2.getY()),
+                        (side1.getZ()*side2.getX()) - (side1.getX()*side2.getZ()),
+                        (side1.getX()*side2.getY()) - (side1.getY()*side2.getZ()));
+    }
+
     public double getX(){
         return X;
     }

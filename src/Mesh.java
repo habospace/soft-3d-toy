@@ -24,11 +24,11 @@ public class Mesh {
         addVertex(new Vec3(5, 5, -60), 7);
         addFace(new Triangle(0, 1, 3), 0);
         addFace(new Triangle(1, 2, 3), 1);
-        addFace(new Triangle(4, 6, 7), 2);
+        addFace(new Triangle(4, 5, 7), 2);
         addFace(new Triangle(5, 6, 7), 3);
         addFace(new Triangle(2, 3, 7), 4);
         addFace(new Triangle(2, 6, 7), 5);
-        addFace(new Triangle(1, 2, 4), 6);
+        addFace(new Triangle(0, 1, 4), 6);
         addFace(new Triangle(1, 4, 5), 7);
         addFace(new Triangle(0, 3, 7), 8);
         addFace(new Triangle(0, 4, 7), 9);
@@ -69,6 +69,10 @@ public class Mesh {
 
     public Vec3[] getVertices(){
         return vertices;
+    }
+
+    public Vec3 getVertex(int index){
+        return vertices[index];
     }
 
     public int getVerticesCount(){
