@@ -82,7 +82,7 @@ public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
 
         return new Vec3((side1.getY()*side2.getZ()) - (side1.getZ()*side2.getY()),
                         (side1.getZ()*side2.getX()) - (side1.getX()*side2.getZ()),
-                        (side1.getX()*side2.getY()) - (side1.getY()*side2.getZ()));
+                        (side1.getX()*side2.getY()) - (side1.getY()*side2.getX()));
     }
 
     public double getX(){

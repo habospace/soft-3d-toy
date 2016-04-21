@@ -56,10 +56,18 @@ public class Test {
         System.out.println("X2 = "+projx2+" Y2 = "+projy2);
         projvector2.print();
         System.out.println();
-        Vec3 vecc1 = new Vec3(-2, 0,  -5).normalize();
+        Vec3 vecc1 = new Vec3(5, 5, 5).normalize();
         Vec3 vecc2 = new Vec3(5, -0, -2).normalize();
         double num = vecc1.dotProduct(vecc2);
         System.out.println(num);
         System.out.println(Math.toDegrees(Math.cosh(num)));
+        Vec3 vecc3 = new Vec3(5, 5, 5);
+        Vec3 vecc4 = new Vec3(-5, 5, 5);
+        Vec3 vecc5 = new Vec3(-5, -5, 5);
+        Vec3 vecc6 = new Vec3(5, -5, 5);
+        Vec3 normal1 = Vec3.getrSurfaceNormalVector(vecc3, vecc4, vecc6);
+        Vec3 normal2 = Vec3.getrSurfaceNormalVector(vecc4, vecc5, vecc6);
+        normal1.print();
+        normal2.print();
     }
 }
