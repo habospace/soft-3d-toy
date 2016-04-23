@@ -10,7 +10,7 @@ public class Mesh {
         this.faces = new Triangle[calculateMaximumLines(verticescount)];
     }
 
-    public Mesh(){
+    public Mesh()  {
         this.verticescount = 8;
         this.vertices = new Vec3[verticescount];
         this.faces = new Triangle[12];

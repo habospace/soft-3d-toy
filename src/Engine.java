@@ -90,6 +90,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     private int calculateShade(Vec3 p1,
                                Vec3 p2,
                                Vec3 p3){
+
         Vec3 centre = new Vec3((p1.getX()+p2.getX()+p3.getX()) / 3,
                                (p1.getY()+p2.getY()+p3.getY()) / 3,
                                (p1.getZ()+p2.getZ()+p3.getZ()) / 3);
