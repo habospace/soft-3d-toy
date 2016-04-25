@@ -12,11 +12,10 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     private double prevTime;
     private int FPSchecks = 0;
     private final Camera camera;
-    private final HashMap<Mesh, Vec3[]> meshes = new HashMap<>();
+    private final HashMap<Mesh, Vec2[]> meshes = new HashMap<>();
     private final Matrix3X3 projectionmatrix = new ProjectionMatrix();
     private final int frameheight;
     private final int framewidth;
-    private final double[][] depthBuffer;
     private final Vec3 lightSource = new Vec3(0, 0, 5);
     Timer timer;
 
@@ -27,9 +26,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         this.camera = camera;
         this.framewidth = framewidth;
         this.frameheight = frameheight;
-        this.depthBuffer = new double[frameheight][framewidth];
         this.timer = new Timer(delay, this);
-        clearDepthBuffer();
         addKeyListener(this);
         setFocusable(true);
     }
@@ -43,7 +40,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     }
 
     public void addMesh(Mesh mesh){
-        meshes.put(mesh, new Vec3[mesh.getVerticesCount()]);
+        meshes.put(mesh, new Vec2[mesh.getVerticesCount()]);
     }
 
     public void paintComponent(Graphics g){
@@ -56,45 +53,79 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         calculateFPS();
         g.setColor(Color.black);
         g.setFont(new Font("default", Font.BOLD, 12));
-        g.drawString("FPS: "+(int)drawFPS, 130, 20);
+        g.drawString("FPS: "+(int)drawFPS, 140, 20);
     }
 
     private void drawTriangles(Graphics g){
+
         for (Mesh mesh : meshes.keySet()){
-            Vec3[] projectedVertices = meshes.get(mesh);
+            Vec2[] projectedVertices = meshes.get(mesh);
             for (Triangle face : mesh.getFaces()){
 
-                Vec3 point1 = projectedVertices[face.getVertex1()];
-                Vec3 point2 = projectedVertices[face.getVertex2()];
-                Vec3 point3 = projectedVertices[face.getVertex3()];
+                Vec2 projPoint1 = projectedVertices[face.getVertex1()];
+                Vec2 projPoint2 = projectedVertices[face.getVertex2()];
+                Vec2 projPoint3 = projectedVertices[face.getVertex3()];
 
-                boolean onScreen = (isOnScreen(point1.getW()) &&
-                                    isOnScreen(point2.getW()) &&
-                                    isOnScreen(point3.getW()));
-                boolean onCanvas = (isOnCanvas(point1.getX(), point1.getY()) &&
-                                    isOnCanvas(point2.getX(), point2.getY()) &&
-                                    isOnCanvas(point3.getX(), point3.getY()));
+                boolean onScreen = (isOnScreen(projPoint1.getW()) &&
+                                    isOnScreen(projPoint2.getW()) &&
+                                    isOnScreen(projPoint3.getW()));
+                boolean onCanvas = (isOnCanvas(projPoint1.getX(), projPoint1.getY()) &&
+                                    isOnCanvas(projPoint2.getX(), projPoint2.getY()) &&
+                                    isOnCanvas(projPoint3.getX(), projPoint3.getY()));
 
-                if (onScreen && onCanvas){
+                boolean inFront = isInFront(projPoint1, projPoint2, projPoint3);
 
-                    int B = calculateShade(mesh.getVertex(face.getVertex1()),
-                                           mesh.getVertex(face.getVertex2()),
-                                           mesh.getVertex(face.getVertex3()));
-                    g.setColor(new Color(0, 0, B));
-                    drawTriangle(point1, point2, point3, g);
+                if (onScreen && onCanvas && inFront){
+
+                    Vec3 unProjP1 = mesh.getVertex(face.getVertex1());
+                    Vec3 unProjP2 = mesh.getVertex(face.getVertex2());
+                    Vec3 unProjP3 = mesh.getVertex(face.getVertex3());
+                    int blueness = calculateShade(unProjP1, unProjP2, unProjP3);
+
+                    g.setColor(new Color(0, 0, blueness));
+                    drawTriangle(projPoint1, projPoint2, projPoint3, g);
                 }
             }
         }
     }
 
-    private int calculateShade(Vec3 p1,
-                               Vec3 p2,
-                               Vec3 p3){
+    private boolean isOnScreen(double w){
+        if (0 <= w){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isOnCanvas(double x, double y){
+        if ((0 < x && x < framewidth) && (0 < y && y < frameheight)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isInFront(Vec2 p1, Vec2 p2, Vec2 p3){
+
+        double lace1 = (p1.getX() * p2.getY())
+                     + (p2.getX() * p3.getY())
+                     + (p3.getX() * p1.getY());
+
+        double lace2 = (p1.getY() * p2.getX())
+                     + (p2.getY() * p3.getX())
+                     + (p3.getY() * p1.getX());
+
+        if (lace1 - lace2 < 0){
+            return false;
+        }
+        return true;
+    }
+
+    private int calculateShade(Vec3 p1, Vec3 p2, Vec3 p3){
 
         Vec3 centre = new Vec3((p1.getX()+p2.getX()+p3.getX()) / 3,
                                (p1.getY()+p2.getY()+p3.getY()) / 3,
                                (p1.getZ()+p2.getZ()+p3.getZ()) / 3);
-        Vec3 surfNorm = Vec3.getrSurfaceNormalVector(p1, p2, p3).normalize();
+
+        Vec3 surfNorm = Vec3.surfaceNormalVector(p1, p2, p3).normalize();
 
         Vec3 lightDirection = new Vec3(lightSource.getX() - centre.getX(),
                                        lightSource.getY() - centre.getY(),
@@ -103,21 +134,21 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         return (int) (Math.abs(lightDirection.dotProduct(surfNorm)) * 255);
     }
 
-    private void drawTriangle(Vec3 p1, Vec3 p2,
-                              Vec3 p3, Graphics g){
+    private void drawTriangle(Vec2 p1, Vec2 p2,
+                              Vec2 p3, Graphics g){
 
         if (p1.getY() > p2.getY()){
-            Vec3 temp = p2;
+            Vec2 temp = p2;
             p2 = p1;
             p1 = temp;
         }
         if (p2.getY() > p3.getY()){
-            Vec3 temp = p2;
+            Vec2 temp = p2;
             p2 = p3;
             p3 = temp;
         }
         if (p1.getY() > p2.getY()){
-            Vec3 temp = p2;
+            Vec2 temp = p2;
             p2 = p1;
             p1 = temp;
         }
@@ -168,9 +199,8 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         return min + (max - min) * clamp(gradient);
     }
 
-    private void processScanLine(int y, Vec3 pa,
-                                 Vec3 pb, Vec3 pc,
-                                 Vec3 pd, Graphics g){
+    private void processScanLine(int y, Vec2 pa, Vec2 pb,
+                                 Vec2 pc, Vec2 pd, Graphics g){
 
         double gradient1 = pa.getY() != pb.getY()
                          ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
@@ -180,56 +210,12 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
         int sx = (int) interpolate(pa.getX(), pb.getX(), gradient1);
         int ex = (int) interpolate(pc.getX(), pd.getX(), gradient2);
 
-        double z1 = interpolate(pa.getZ(), pb.getZ(), gradient1);
-        double z2 = interpolate(pc.getZ(), pd.getZ(), gradient2);
-
-        for (int x = sx; x < ex; x++) {
-
-            double gradient = (x - sx) / (ex - sx);
-            double z = interpolate(z1, z2, gradient);
-
-            if (isOnCanvas(x, y) && isCloser(x, y, z)){
+        for (int x = sx; x < ex; x++){
                 putPixel(x, y, g);
-                updateDepthBuffer(x, y, z);
-            }
         }
     }
 
-    private boolean isCloser (int x, int y, double z){
-        if (depthBuffer[x][y] < z){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isOnScreen(double w){
-        if (0 <= w){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isOnCanvas(double x, double y){
-        if ((0 < x && x < framewidth) && (0 < y && y <frameheight)){
-            return true;
-        }
-        return false;
-    }
-
-    private void updateDepthBuffer(int x, int y, double z){
-        depthBuffer[x][y] = z;
-    }
-
-    private void clearDepthBuffer(){
-        for (int i = 0; i < frameheight; i++){
-            for (int j = 0; j < framewidth; j++){
-                depthBuffer[i][j] = Double.NEGATIVE_INFINITY;
-            }
-        }
-    }
-
-    private void putPixel(int x, int y,
-                          Graphics g){
+    private void putPixel(int x, int y, Graphics g){
         g.drawLine(x, y, x, y);
     }
 
@@ -250,10 +236,8 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
                 double projx = (projvector.getX() / projvector.getW()*framewidth/2) + framewidth/2;
                 double projy = (projvector.getY() / projvector.getW()*frameheight/2) + frameheight/2;
 
-                Vec3 pixel = new Vec3(projx, projy,
-                                      vertices[i].getZ(),
-                                      projvector.getW());
-                meshes.get(mesh)[i] = pixel;
+                Vec2 projectedVertex = new Vec2(projx, projy, projvector.getW());
+                meshes.get(mesh)[i] = projectedVertex;
             }
         }
     }
@@ -273,7 +257,6 @@ public class Engine extends JPanel implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
         render();
         repaint();
-        clearDepthBuffer();
     }
 
     @Override

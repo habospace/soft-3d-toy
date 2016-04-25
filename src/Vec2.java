@@ -30,13 +30,18 @@ public class Vec2 implements Vec<Vec2> {
 
     @Override
     public Vec2 normalize(){
-        double magnitude = Math.sqrt((X*X) + (Y*Y));
+        double magnitude = length();
         return new Vec2(X/magnitude, Y/magnitude);
     }
 
     @Override
     public double dotProduct(Vec2 vec){
         return (X*vec.getX() + Y*vec.getY());
+    }
+
+    @Override
+    public double length(){
+        return Math.sqrt((Y*Y) + (X*X));
     }
 
     public double getX(){
@@ -54,5 +59,6 @@ public class Vec2 implements Vec<Vec2> {
     public void print(){
         System.out.println("X = "+X);
         System.out.println("Y = "+Y);
+        System.out.println("W = "+W);
     }
 }

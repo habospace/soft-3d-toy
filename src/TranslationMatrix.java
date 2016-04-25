@@ -4,9 +4,7 @@ public class TranslationMatrix extends Matrix3X3 {
     public TranslationMatrix(double deltaX,
                              double deltaY,
                              double deltaZ){
-        makeMatrix(deltaX,
-                   deltaY,
-                   deltaZ);
+        makeMatrix(deltaX, deltaY, deltaZ);
     }
 
     private void makeMatrix(double deltaX,

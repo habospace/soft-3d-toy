@@ -5,4 +5,6 @@ public interface Vec<V>{
     public double dotProduct(V other);
 
     public V normalize();
+
+    public double length();
 }

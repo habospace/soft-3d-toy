@@ -10,7 +10,7 @@ public class Mesh {
         this.faces = new Triangle[calculateMaximumLines(verticescount)];
     }
 
-    public Mesh()  {
+    public Mesh(){
         this.verticescount = 8;
         this.vertices = new Vec3[verticescount];
         this.faces = new Triangle[12];
@@ -22,27 +22,25 @@ public class Mesh {
         addVertex(new Vec3(-5, -5, -60), 5);
         addVertex(new Vec3(-5, 5, -60), 6);
         addVertex(new Vec3(5, 5, -60), 7);
-        addFace(new Triangle(0, 1, 3), 0);
-        addFace(new Triangle(1, 2, 3), 1);
-        addFace(new Triangle(4, 5, 7), 2);
-        addFace(new Triangle(5, 6, 7), 3);
-        addFace(new Triangle(2, 3, 7), 4);
-        addFace(new Triangle(2, 6, 7), 5);
+        addFace(new Triangle(0, 2, 1), 0);
+        addFace(new Triangle(0, 3, 2), 1);
+        addFace(new Triangle(4, 5, 6), 2);
+        addFace(new Triangle(4, 6, 7), 3);
+        addFace(new Triangle(3, 7, 2), 4);
+        addFace(new Triangle(2, 7, 6), 5);
         addFace(new Triangle(0, 1, 4), 6);
-        addFace(new Triangle(1, 4, 5), 7);
-        addFace(new Triangle(0, 3, 7), 8);
-        addFace(new Triangle(0, 4, 7), 9);
+        addFace(new Triangle(1, 5, 4), 7);
+        addFace(new Triangle(4, 7, 0), 8);
+        addFace(new Triangle(0, 7, 3), 9);
         addFace(new Triangle(1, 2, 6), 10);
-        addFace(new Triangle(1, 5, 6), 11);
-
+        addFace(new Triangle(5, 1, 6), 11);
     }
 
     private int calculateMaximumLines(int verticescount){
         return (verticescount*(verticescount -1))/2;
     }
 
-    public void addVertex(Vec3 vertex,
-                          int index){
+    public void addVertex(Vec3 vertex, int index){
         try {
             vertices[index] = vertex;
         }
@@ -51,8 +49,7 @@ public class Mesh {
         }
     }
 
-    public void addFace(Triangle face,
-                        int index){
+    public void addFace(Triangle face, int index){
         try {
             faces[index] = face;
         }

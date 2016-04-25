@@ -65,9 +65,21 @@ public class Test {
         Vec3 vecc4 = new Vec3(-5, 5, 5);
         Vec3 vecc5 = new Vec3(-5, -5, 5);
         Vec3 vecc6 = new Vec3(5, -5, 5);
-        Vec3 normal1 = Vec3.getrSurfaceNormalVector(vecc3, vecc4, vecc6);
-        Vec3 normal2 = Vec3.getrSurfaceNormalVector(vecc4, vecc5, vecc6);
+        Vec3 normal1 = Vec3.surfaceNormalVector(vecc3, vecc4, vecc6);
+        Vec3 normal2 = Vec3.surfaceNormalVector(vecc4, vecc5, vecc6);
         normal1.print();
         normal2.print();
+        Mesh mesh = new Mesh();
+        Vec3[] vertices = mesh.getVertices();
+        Triangle[] faces = mesh.getFaces();
+        int i = 0;
+        for (Triangle face : faces){
+            i += 1;
+            Vec3 p1 = vertices[face.getVertex1()];
+            Vec3 p2 = vertices[face.getVertex2()];
+            Vec3 p3 = vertices[face.getVertex3()];
+            Vec3 surfacenormal = Vec3.surfaceNormalVector(p1, p2, p3);
+            System.out.println(i+"  "+surfacenormal.length());
+        }
     }
 }
