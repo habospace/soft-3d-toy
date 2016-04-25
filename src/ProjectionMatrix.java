@@ -7,11 +7,11 @@ public class ProjectionMatrix extends Matrix3X3 {
     private static final double nearZ = 10;
     private static final double farZ = 100;
 
-    public ProjectionMatrix (){
+    public ProjectionMatrix () {
         makeMatrix();
     }
 
-    private void makeMatrix(){
+    private void makeMatrix() {
         makeIdentityMatrix();
         matrix[1][1] = 1 / Math.tan(fovy / 2);
         matrix[0][0] = matrix[1][1] / aspect;

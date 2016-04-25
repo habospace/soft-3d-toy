@@ -2,7 +2,7 @@ import java.lang.Math;
 
 public class Test {
 
-    public static void main (String[] args){
+    public static void main (String[] args) {
 
         Mesh cube = new Mesh(8);
         cube.addVertex(new Vec3(-1, 1, 1), 0);
@@ -75,9 +75,9 @@ public class Test {
         int i = 0;
         for (Triangle face : faces){
             i += 1;
-            Vec3 p1 = vertices[face.getVertex1()];
-            Vec3 p2 = vertices[face.getVertex2()];
-            Vec3 p3 = vertices[face.getVertex3()];
+            Vec3 p1 = vertices[(int)face.getVertex1()];
+            Vec3 p2 = vertices[(int)face.getVertex2()];
+            Vec3 p3 = vertices[(int)face.getVertex3()];
             Vec3 surfacenormal = Vec3.surfaceNormalVector(p1, p2, p3);
             System.out.println(i+"  "+surfacenormal.length());
         }

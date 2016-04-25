@@ -1,27 +1,50 @@
-public class Triangle {
+public class Triangle <T> implements Comparable<Triangle> {
 
-    private final int vertex1;
-    private final int vertex2;
-    private final int vertex3;
+    private final T vertex1;
+    private final T vertex2;
+    private final T vertex3;
+    private double centreZDepth;
+    private int colorCode;
 
-    public Triangle(int vertex1,
-                    int vertex2,
-                    int vertex3){
+    public Triangle(T vertex1,
+                    T vertex2,
+                    T vertex3) {
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
         this.vertex3 = vertex3;
     }
 
-    public int getVertex1(){
+    public T getVertex1() {
         return vertex1;
     }
 
-    public int getVertex2(){
+    public T getVertex2() {
         return vertex2;
     }
 
-    public int getVertex3(){
+    public T getVertex3() {
         return vertex3;
     }
 
+    public void setCentreZDepth(double z) {
+        centreZDepth = z;
+    }
+
+    public double getCentreZDepth() {
+        return  centreZDepth;
+    }
+
+    public void setColorCode(int code) {
+        colorCode = code;
+    }
+
+    public int getColorCode() {
+        return colorCode;
+    }
+
+    @Override
+    public int compareTo(Triangle other) {
+        double compareDepth = other.getCentreZDepth();
+        return (int) (centreZDepth - compareDepth);
+    }
 }

@@ -4,41 +4,41 @@ public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, Multipliable
     protected static final int matrixwidth = 4;
     protected final double[][] matrix = new double[matrixheight][matrixwidth];
 
-    public Matrix3X3(){
+    public Matrix3X3() {
         makeIdentityMatrix();
     }
 
-    public Matrix3X3(double[][] array){
+    public Matrix3X3(double[][] array) {
         makeMatrixFromArray(array);
     }
 
-    public static XaxisRotationMatrix constructXaxisRotationMatrix(double theta){
+    public static XaxisRotationMatrix constructXaxisRotationMatrix(double theta) {
         return new XaxisRotationMatrix(theta);
     }
 
-    public static YaxisRotationMatrix constructYaxisRotationMatrix(double theta){
+    public static YaxisRotationMatrix constructYaxisRotationMatrix(double theta) {
         return new YaxisRotationMatrix(theta);
     }
 
     public static TranslationMatrix constructTranslationMatrix(double x,
                                                                double y,
-                                                               double z){
+                                                               double z) {
         return new TranslationMatrix(x, y, z);
     }
 
-    public static ProjectionMatrix constructProjectionMatrix(){
+    public static ProjectionMatrix constructProjectionMatrix() {
         return new ProjectionMatrix();
     }
 
-    public static Matrix3X3 constructIdentityMatrix(){
+    public static Matrix3X3 constructIdentityMatrix() {
         return new Matrix3X3();
     }
 
-    public static Matrix3X3 constructMatrixFromArray(double[][] array){
+    public static Matrix3X3 constructMatrixFromArray(double[][] array) {
         return new Matrix3X3(array);
     }
 
-    protected void makeIdentityMatrix(){
+    protected void makeIdentityMatrix() {
         for(int i = 0; i < matrixheight; i++){
             for (int j = 0; j < matrixwidth; j++){
                 if (i == j){
@@ -51,7 +51,7 @@ public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, Multipliable
         }
     }
 
-    private void makeMatrixFromArray(double[][] argmatrix){
+    private void makeMatrixFromArray(double[][] argmatrix) {
         int limit1 = 0;
         int limit2 = 0;
         if (argmatrix.length >= matrixheight){
@@ -107,7 +107,7 @@ public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, Multipliable
     }
 
     @Override
-    public Vec3 multiplyByVector(Vec3 vec){
+    public Vec3 multiplyByVector(Vec3 vec) {
         double[] multipliedvector = new double[matrixheight];
         for (int i = 0; i < matrixheight; i++){
             double v0 = matrix[i][0] * vec.getX();
@@ -122,7 +122,7 @@ public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, Multipliable
                         multipliedvector[3]);
     }
 
-    public void printMatrix(){
+    public void printMatrix() {
         for(int i = 0; i < matrixheight; i++){
             System.out.println();
             for (int j = 0; j < matrixwidth; j++){
@@ -131,7 +131,7 @@ public class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, Multipliable
         }
     }
 
-    public double[][] getMatrix(){
+    public double[][] getMatrix() {
         return matrix;
     }
 }

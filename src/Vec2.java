@@ -8,7 +8,7 @@ public class Vec2 implements Vec<Vec2> {
     private final double W;
 
     public Vec2(double x,
-                double y){
+                double y) {
         this.X = x;
         this.Y = y;
         this.W = index;
@@ -16,47 +16,47 @@ public class Vec2 implements Vec<Vec2> {
 
     public Vec2(double x,
                 double y,
-                double w){
+                double w) {
         this.X = x;
         this.Y = y;
         this.W = w;
     }
 
     @Override
-    public Vec2 addVector(Vec2 vec){
+    public Vec2 addVector(Vec2 vec) {
         return new Vec2(X + vec.getX(),
                         Y + vec.getY());
     }
 
     @Override
-    public Vec2 normalize(){
+    public Vec2 normalize() {
         double magnitude = length();
         return new Vec2(X/magnitude, Y/magnitude);
     }
 
     @Override
-    public double dotProduct(Vec2 vec){
+    public double dotProduct(Vec2 vec) {
         return (X*vec.getX() + Y*vec.getY());
     }
 
     @Override
-    public double length(){
+    public double length() {
         return Math.sqrt((Y*Y) + (X*X));
     }
 
-    public double getX(){
+    public double getX() {
         return X;
     }
 
-    public double getY(){
+    public double getY() {
         return Y;
     }
 
-    public double getW(){
+    public double getW() {
         return W;
     }
 
-    public void print(){
+    public void print() {
         System.out.println("X = "+X);
         System.out.println("Y = "+Y);
         System.out.println("W = "+W);

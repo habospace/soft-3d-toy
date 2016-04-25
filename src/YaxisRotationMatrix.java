@@ -2,11 +2,11 @@ import java.lang.Math;
 
 public class YaxisRotationMatrix extends Matrix3X3 {
 
-    public YaxisRotationMatrix(double theta){
+    public YaxisRotationMatrix(double theta) {
         makeMatrix(theta);
     }
 
-    private void makeMatrix(double theta){
+    private void makeMatrix(double theta) {
         makeIdentityMatrix();
         double thetaRad = Math.toRadians(theta);
         matrix[0][0] = Math.cos(thetaRad);
