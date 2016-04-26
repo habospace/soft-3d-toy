@@ -45,6 +45,9 @@ public class Triangle <T> implements Comparable<Triangle> {
     @Override
     public int compareTo(Triangle other) {
         double compareDepth = other.getCentreZDepth();
+        if (compareDepth == centreZDepth){
+            return 1;
+        }
         return (int) (centreZDepth - compareDepth);
     }
 }

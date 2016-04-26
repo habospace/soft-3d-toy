@@ -31,6 +31,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
         this.timer = new Timer(delay, this);
         addKeyListener(this);
         setFocusable(true);
+        setBackground(Color.LIGHT_GRAY);
     }
 
     public void startEngine() {
@@ -75,7 +76,6 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
                 boolean onCanvas = (isOnCanvas(projPoint1.getX(), projPoint1.getY()) &&
                                     isOnCanvas(projPoint2.getX(), projPoint2.getY()) &&
                                     isOnCanvas(projPoint3.getX(), projPoint3.getY()));
-
                 boolean inFront = isInFront(projPoint1, projPoint2, projPoint3);
 
                 if (onScreen && onCanvas && inFront){
@@ -168,13 +168,19 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
             p1 = temp;
         }
 
-        double dP1P2, dP1P3;
+        double dP1P2 = 0;
+        double dP1P3;
+        boolean right = false;
+        boolean left = false;
 
         if (p2.getY() - p1.getY() > 0){
             dP1P2 = (p2.getX()-p1.getX()) / (p2.getY()-p1.getY());
         }
+        else if (p2.getX() > p1.getX()){
+            right = true;
+        }
         else {
-            dP1P2 = 0;
+            left = true;
         }
         if (p3.getY() - p1.getY() > 0){
             dP1P3 = (p3.getX()-p1.getX()) / (p3.getY()-p1.getY());
@@ -182,8 +188,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
         else{
             dP1P3 = 0;
         }
-
-        if (dP1P2 > dP1P3){
+        if (right || (!left && dP1P2 > dP1P3)){
             for (int y = (int)p1.getY(); y <= (int)p3.getY(); y++){
                 if (y < p2.getY()){
                     processScanLine(y, p1, p3, p1, p2, g);
@@ -345,6 +350,7 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
         Engine engine = new Engine(camera, 20, 300, 300);
         Mesh mesh1 = new Mesh();
         engine.addMesh(mesh1);
+
         Mesh mesh2 = new Mesh();
         mesh2.move(new TranslationMatrix(15, 0, 0));
         engine.addMesh(mesh2);
@@ -371,4 +377,4 @@ public class Engine extends JPanel implements ActionListener, KeyListener {
         frame.add(engine);
         engine.startEngine();
     }
-}
+}//1221997523 07-OCT-95
