@@ -10,13 +10,13 @@ class Texture {
     private final int width;
     private final Color[][] colorArray;
 
-    Texture(String path) {
+    Texture (String path) {
         this.colorArray = loadImage(path);
         this.height = colorArray.length;
         this.width = colorArray[0].length;
     }
 
-    private static Color[][] loadImage(String path) {
+    private static Color[][] loadImage (String path) {
 
         Color[][] colorArray;
         int height;
@@ -49,7 +49,7 @@ class Texture {
         }
     }
 
-    Color map(double uPos, double vPos) {
+    Color map (double uPos, double vPos) {
 
         final int x = Math.abs((int) (uPos * width) % width);
         final int y = Math.abs((int) (vPos * height) % height);

@@ -5,7 +5,7 @@ class ProjectedPoint {
     private final Vec2 uvPosition;
 
 
-    ProjectedPoint(double x, double y,
+    ProjectedPoint (double x, double y,
                    Vec2 uvPosition) {
         this.x = x;
         this.y = y;

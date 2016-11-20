@@ -1,4 +1,4 @@
 interface MultipliableByMatrix<V, M> {
 
-    V multiplyByMatrix(M other);
+    V multiplyByMatrix (M other);
 }

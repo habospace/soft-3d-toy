@@ -1,15 +1,15 @@
 class TranslationMatrix extends Matrix3X3 {
 
 
-    TranslationMatrix(double deltaX,
-                      double deltaY,
-                      double deltaZ) {
+    TranslationMatrix (double deltaX,
+                       double deltaY,
+                       double deltaZ) {
         makeMatrix(deltaX, deltaY, deltaZ);
     }
 
-    private void makeMatrix(double deltaX,
-                            double deltaY,
-                            double deltaZ) {
+    private void makeMatrix (double deltaX,
+                             double deltaY,
+                             double deltaZ) {
         makeIdentityMatrix();
         matrix[0][3] = deltaX;
         matrix[1][3] = deltaY;

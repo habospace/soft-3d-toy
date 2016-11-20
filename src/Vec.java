@@ -1,10 +1,10 @@
 interface Vec<V>{
 
-    V addVector(V other);
+    V addVector (V other);
 
-    double dotProduct(V other);
+    double dotProduct (V other);
 
-    V normalize();
+    V normalize ();
 
-    double length();
+    double length ();
 }
