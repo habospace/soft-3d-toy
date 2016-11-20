@@ -4,41 +4,41 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
     static final int matrixWidth = 4;
     final double[][] matrix = new double[matrixHeight][matrixWidth];
 
-    Matrix3X3() {
+    Matrix3X3 () {
         makeIdentityMatrix();
     }
 
-    private Matrix3X3(double[][] array) {
+    private Matrix3X3 (double[][] array) {
         makeMatrixFromArray(array);
     }
 
-    public static xAxisRotationMatrix constructXaxisRotationMatrix(double theta) {
+    public static xAxisRotationMatrix constructXaxisRotationMatrix (double theta) {
         return new xAxisRotationMatrix(theta);
     }
 
-    public static yAxisRotationMatrix constructYaxisRotationMatrix(double theta) {
+    public static yAxisRotationMatrix constructYaxisRotationMatrix (double theta) {
         return new yAxisRotationMatrix(theta);
     }
 
-    public static TranslationMatrix constructTranslationMatrix(double x,
-                                                               double y,
-                                                               double z) {
-        return new TranslationMatrix(x, y, z);
+    public static TranslationMatrix constructTranslationMatrix (double x,
+                                                                double y,
+                                                                double z) {
+        return new TranslationMatrix (x, y, z);
     }
 
-    public static ProjectionMatrix constructProjectionMatrix() {
-        return new ProjectionMatrix();
+    public static ProjectionMatrix constructProjectionMatrix () {
+        return new ProjectionMatrix ();
     }
 
-    public static Matrix3X3 constructIdentityMatrix() {
+    public static Matrix3X3 constructIdentityMatrix () {
         return new Matrix3X3();
     }
 
-    public static Matrix3X3 constructMatrixFromArray(double[][] array) {
+    public static Matrix3X3 constructMatrixFromArray (double[][] array) {
         return new Matrix3X3(array);
     }
 
-    void makeIdentityMatrix() {
+    void makeIdentityMatrix () {
         for(int i = 0; i < matrixHeight; i++){
             for (int j = 0; j < matrixWidth; j++){
                 if (i == j){
@@ -51,7 +51,7 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
         }
     }
 
-    private void makeMatrixFromArray(double[][] argMatrix) {
+    private void makeMatrixFromArray (double[][] argMatrix) {
         int limit1 = 0;
         int limit2 = 0;
         if (argMatrix.length >= matrixHeight){
@@ -86,7 +86,7 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
     }
 
     @Override
-    public Matrix3X3 multiplyByMatrix(Matrix3X3 otherMatrix) {
+    public Matrix3X3 multiplyByMatrix (Matrix3X3 otherMatrix) {
         double[][] transMatrix = otherMatrix.getMatrix();
         double[][] tempMatrix = new double[matrixHeight][matrixWidth];
         for (int i = 0; i < matrixHeight; i++){
@@ -105,7 +105,7 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
     }
 
     @Override
-    public Vec3 multiplyByVector(Vec3 vec) {
+    public Vec3 multiplyByVector (Vec3 vec) {
         double[] multipliedVector = new double[matrixHeight];
         for (int i = 0; i < matrixHeight; i++){
             double v0 = matrix[i][0] * vec.getX();
@@ -120,7 +120,7 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
                 multipliedVector[3]);
     }
 
-    void printMatrix() {
+    void printMatrix () {
         for(int i = 0; i < matrixHeight; i++){
             System.out.println();
             for (int j = 0; j < matrixWidth; j++){
@@ -129,7 +129,7 @@ class Matrix3X3 implements MultipliableByVector<Vec3, Vec3>, MultipliableByMatri
         }
     }
 
-    double[][] getMatrix() {
+    double[][] getMatrix () {
         return matrix;
     }
 }
