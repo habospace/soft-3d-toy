@@ -19,10 +19,10 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     private final Vec3 lightSource = new Vec3(0, 0, 5);
     private Timer timer;
 
-    private Engine(Camera camera,
-                   int delay,
-                   int frameWidth,
-                   int frameHeight) {
+    private Engine (Camera camera,
+                    int delay,
+                    int frameWidth,
+                    int frameHeight) {
         this.camera = camera;
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
@@ -32,32 +32,32 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         setBackground(Color.LIGHT_GRAY);
     }
 
-    private void startEngine() {
+    private void startEngine () {
         timer.start();
     }
 
-    private void stopEngine() {
+    private void stopEngine () {
         timer.stop();
     }
 
-    private void addMesh(Mesh mesh) {
+    private void addMesh (Mesh mesh) {
         meshes.put(mesh, new Vec2[mesh.getVerticesCount()]);
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent (Graphics g) {
         super.paintComponent(g);
         drawTriangles(g);
         drawFPS(g);
     }
 
-    private void drawFPS(Graphics g) {
+    private void drawFPS (Graphics g) {
         calculateFPS();
         g.setColor(Color.black);
         g.setFont(new Font("default", Font.BOLD, 12));
         g.drawString("FPS: "+(int)drawFPS, 140, 20);
     }
 
-    private void drawTriangles(Graphics g) {
+    private void drawTriangles (Graphics g) {
 
         ArrayList<Triangle> triangles = new ArrayList<>();
 
@@ -117,15 +117,15 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    private boolean isOnScreen(double w) {
+    private boolean isOnScreen (double w) {
         return 0 <= w;
     }
 
-    private boolean isOnCanvas(double x, double y) {
+    private boolean isOnCanvas (double x, double y) {
         return (0 < x && x < frameWidth) && (0 < y && y < frameHeight);
     }
 
-    private boolean isInFront(Vec2 p1, Vec2 p2, Vec2 p3) {
+    private boolean isInFront (Vec2 p1, Vec2 p2, Vec2 p3) {
 
         final double lace1 = (p1.getX() * p2.getY())
                            + (p2.getX() * p3.getY())
@@ -138,7 +138,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         return lace1 - lace2 >= 0;
     }
 
-    private double calculateShade(Vec3 p1, Vec3 p2, Vec3 p3) {
+    private double calculateShade (Vec3 p1, Vec3 p2, Vec3 p3) {
 
         Vec3 centre = new Vec3((p1.getX()+p2.getX()+p3.getX()) / 3,
                                (p1.getY()+p2.getY()+p3.getY()) / 3,
@@ -147,13 +147,13 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         Vec3 surfNorm = Vec3.surfaceNormalVector(p1, p2, p3).normalize();
 
         Vec3 lightDirection = new Vec3(lightSource.getX() - centre.getX(),
-                lightSource.getY() - centre.getY(),
-                lightSource.getZ() - centre.getZ()).normalize();
+                                       lightSource.getY() - centre.getY(),
+                                       lightSource.getZ() - centre.getZ()).normalize();
 
         return Math.abs(lightDirection.dotProduct(surfNorm));
     }
 
-    private void drawTriangle(Triangle T, Graphics g) {
+    private void drawTriangle (Triangle T, Graphics g) {
 
         ProjectedPoint p1 = T.getPoint1();
         ProjectedPoint p2 = T.getPoint2();
@@ -221,19 +221,19 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    private double clamp(double value) {
+    private double clamp (double value) {
         return Math.max(0, Math.min(value, 1));
     }
 
-    private double interpolate(double min, double max,
-                               double gradient) {
+    private double interpolate (double min, double max,
+                                double gradient) {
         return min + (max - min) * clamp(gradient);
     }
 
-    private void processScanLine(int y, Texture texture, double shading,
-                                 ProjectedPoint pa, ProjectedPoint pb,
-                                 ProjectedPoint pc, ProjectedPoint pd,
-                                 Graphics g) {
+    private void processScanLine (int y, Texture texture, double shading,
+                                  ProjectedPoint pa, ProjectedPoint pb,
+                                  ProjectedPoint pc, ProjectedPoint pd,
+                                  Graphics g) {
 
         double gradient1 = pa.getY() != pb.getY()
                          ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
@@ -262,12 +262,12 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    private void putPixel(int x, int y, Color c, Graphics g) {
+    private void putPixel (int x, int y, Color c, Graphics g) {
         g.setColor(c);
         g.drawLine(x, y, x, y);
     }
 
-    private void render(){
+    private void render (){
 
         Matrix3X3 xRotation = new xAxisRotationMatrix(camera.getXRotation());
         Matrix3X3 yRotation = new yAxisRotationMatrix(camera.getYRotation());
@@ -291,7 +291,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    private void calculateFPS() {
+    private void calculateFPS () {
         fpsChecks++;
         double currentTime = System.currentTimeMillis();
         double newFPS = (1000 / (currentTime - prevTime));
@@ -303,13 +303,13 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed (ActionEvent e) {
         render();
         repaint();
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed (KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W){
             camera.moveForward();
@@ -338,7 +338,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased (KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W){
             camera.setBackForwardMovement();
@@ -367,14 +367,14 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped (KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE){
             stopEngine();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         Camera camera = new Camera();
         Engine engine = new Engine(camera, 20, 500, 500);

@@ -2,11 +2,11 @@ import java.lang.Math;
 
 class xAxisRotationMatrix extends Matrix3X3 {
 
-    xAxisRotationMatrix(double theta) {
+    xAxisRotationMatrix (double theta) {
         makeMatrix(theta);
     }
 
-    private void makeMatrix(double theta) {
+    private void makeMatrix (double theta) {
         makeIdentityMatrix();
         double thetaRad = Math.toRadians(theta);
         matrix[1][1] = Math.cos(thetaRad);
