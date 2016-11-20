@@ -7,14 +7,14 @@ class Mesh {
     private final ArrayList<Pair<Triple<Integer>, Triple<Vec2>>> faces;
     private final Texture texture;
 
-    Mesh(int verticesCount, Texture texture) {
+    Mesh (int verticesCount, Texture texture) {
         this.verticesCount = verticesCount;
         this.vertices = new Vec3[verticesCount];
         this.faces = new ArrayList<>();
         this.texture = texture;
     }
 
-    Mesh() {
+    Mesh () {
         this.verticesCount = 8;
         this.vertices = new Vec3[verticesCount];
         this.faces = new ArrayList<>();
@@ -57,11 +57,11 @@ class Mesh {
         return texture;
     }
 
-    void addVertex(Vec3 vertex, int index) {
+    void addVertex (Vec3 vertex, int index) {
         vertices[index] = vertex;
     }
 
-    void addFace(Pair<Triple<Integer>, Triple<Vec2>> face, int index) {
+    void addFace (Pair<Triple<Integer>, Triple<Vec2>> face, int index) {
         faces.add(index, face);
     }
 
@@ -71,19 +71,19 @@ class Mesh {
         }
     }
 
-    Vec3[] getVertices() {
+    Vec3[] getVertices () {
         return vertices;
     }
 
-    Vec3 getVertex(int index) {
+    Vec3 getVertex (int index) {
         return vertices[index];
     }
 
-    int getVerticesCount() {
+    int getVerticesCount () {
         return verticesCount;
     }
 
-    ArrayList<Pair<Triple<Integer>, Triple<Vec2>>> getFaces() {
+    ArrayList<Pair<Triple<Integer>, Triple<Vec2>>> getFaces () {
         return faces;
     }
 }

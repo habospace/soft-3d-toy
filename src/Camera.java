@@ -1,88 +1,88 @@
 class Camera {
-    //
+
     private double xRotation;
     private double yRotation;
     private double forward;
     private double sideWard;
 
-    Camera(double xRot,
-           double yRot,
-           double forward,
-           double sideWard) {
+    Camera (double xRot,
+            double yRot,
+            double forward,
+            double sideWard) {
         this.xRotation = xRot;
         this.yRotation = yRot;
         this.forward = forward;
         this.sideWard = sideWard;
     }
 
-    Camera() {
+    Camera () {
         this.xRotation = 0;
         this.yRotation = 0;
         this.forward = 0;
         this.sideWard = 0;
     }
 
-    void rotateXAxisAtPositive() {
+    void rotateXAxisAtPositive () {
         xRotation = 1;
     }
 
-    void rotateXAxisAtNegative() {
+    void rotateXAxisAtNegative () {
         xRotation = -1;
     }
 
-    void rotateYAxisAtPositive() {
+    void rotateYAxisAtPositive () {
         yRotation = 1;
     }
 
-    void rotateYAxisAtNegative() {
+    void rotateYAxisAtNegative () {
         yRotation = -1;
     }
 
-    void moveForward() {
+    void moveForward () {
         forward = -1;
     }
 
-    void moveBackward() {
+    void moveBackward () {
         forward = 1;
     }
 
-    void moveRight() {
+    void moveRight () {
         sideWard = 1;
     }
 
-    void moveLeft() {
+    void moveLeft () {
         sideWard = -1;
     }
 
-    void setBackXRotation() {
+    void setBackXRotation () {
         xRotation = 0;
     }
 
-    void setBackYRotation() {
+    void setBackYRotation () {
         yRotation = 0;
     }
 
-    void setBackForwardMovement() {
+    void setBackForwardMovement () {
         forward = 0;
     }
 
-    void setBackSideWardMovement() {
+    void setBackSideWardMovement () {
         sideWard = 0;
     }
 
-    double getXRotation() {
+    double getXRotation () {
         return xRotation;
     }
 
-    double getYRotation() {
+    double getYRotation () {
         return yRotation;
     }
 
-    double getForwardMovement() {
+    double getForwardMovement () {
         return forward;
     }
 
-    double getSideWardMovement() {
+    double getSideWardMovement () {
         return sideWard;
     }
 }
