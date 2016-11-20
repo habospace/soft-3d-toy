@@ -77,18 +77,20 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
                 final boolean onScreen = (isOnScreen(projectedPoint1.getW()) &&
                                           isOnScreen(projectedPoint2.getW()) &&
                                           isOnScreen(projectedPoint3.getW()));
-                final boolean onCanvas = (isOnCanvas(projectedPoint1.getX(), projectedPoint1.getY()) &&
-                                          isOnCanvas(projectedPoint2.getX(), projectedPoint2.getY()) &&
-                                          isOnCanvas(projectedPoint3.getX(), projectedPoint3.getY()));
-                final boolean inFront = isInFront(projectedPoint1, projectedPoint2, projectedPoint3);
 
-                if (onScreen && inFront && onCanvas){
+                final boolean inFront = isInFront(projectedPoint1,
+                                                  projectedPoint2,
+                                                  projectedPoint3);
+
+                if (onScreen && inFront){
 
                     Vec3 unProjectedP1 = mesh.getVertex(iVertex1);
                     Vec3 unProjectedP2 = mesh.getVertex(iVertex2);
                     Vec3 unProjectedP3 = mesh.getVertex(iVertex3);
 
-                    final double shade = calculateShade(unProjectedP1, unProjectedP2, unProjectedP3);
+                    final double shade = calculateShade(unProjectedP1,
+                                                        unProjectedP2,
+                                                        unProjectedP3);
                     final double zDepth = (unProjectedP1.getZ() +
                                            unProjectedP2.getZ() +
                                            unProjectedP3.getZ())/ 3;
@@ -119,10 +121,6 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
 
     private boolean isOnScreen (double w) {
         return 0 <= w;
-    }
-
-    private boolean isOnCanvas (double x, double y) {
-        return (0 < x && x < frameWidth) && (0 < y && y < frameHeight);
     }
 
     private boolean isInFront (Vec2 p1, Vec2 p2, Vec2 p3) {
@@ -195,8 +193,12 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
         else{
             dP1P3 = 0;
         }
+
+        final int yStart = Math.max((int) (p1.getY()), 0);
+        final int yEnd = Math.min((int) (p3.getY()), frameHeight);
+
         if (right || (!left && dP1P2 > dP1P3)){
-            for (int y = (int) p1.getY(); y <= (int) p3.getY(); y++){
+            for (int y = yStart; y <= yEnd; y++){
                 if (y < p2.getY()){
                     processScanLine(y, T.getTexture(), T.getShading(),
                             p1, p3, p1, p2, g);
@@ -208,7 +210,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
             }
         }
         else{
-            for (int y = (int)p1.getY(); y <= (int)p3.getY(); y++){
+            for (int y = yStart; y <= yEnd; y++){
                 if (y < p2.getY()){
                     processScanLine(y, T.getTexture(), T.getShading(),
                             p1, p2, p1, p3, g);
@@ -235,20 +237,23 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
                                   ProjectedPoint pc, ProjectedPoint pd,
                                   Graphics g) {
 
-        double gradient1 = pa.getY() != pb.getY()
-                         ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
-        double gradient2 = pc.getY() != pd.getY()
-                         ? (y - pc.getY()) / (pd.getY() - pc.getY()) : 1;
+        final double gradient1 = pa.getY() != pb.getY()
+                               ? (y - pa.getY()) / (pb.getY() - pa.getY()) : 1;
+        final double gradient2 = pc.getY() != pd.getY()
+                               ? (y - pc.getY()) / (pd.getY() - pc.getY()) : 1;
 
-        double su = interpolate(pa.getUvPosition().getX(), pb.getUvPosition().getX(), gradient1);
-        double eu = interpolate(pc.getUvPosition().getX(), pd.getUvPosition().getX(), gradient2);
-        double sv = interpolate(pa.getUvPosition().getY(), pb.getUvPosition().getY(), gradient1);
-        double ev = interpolate(pc.getUvPosition().getY(), pd.getUvPosition().getY(), gradient2);
+        final double su = interpolate(pa.getUvPosition().getX(), pb.getUvPosition().getX(), gradient1);
+        final double eu = interpolate(pc.getUvPosition().getX(), pd.getUvPosition().getX(), gradient2);
+        final double sv = interpolate(pa.getUvPosition().getY(), pb.getUvPosition().getY(), gradient1);
+        final double ev = interpolate(pc.getUvPosition().getY(), pd.getUvPosition().getY(), gradient2);
 
-        int sx = (int) interpolate(pa.getX(), pb.getX(), gradient1);
-        int ex = (int) interpolate(pc.getX(), pd.getX(), gradient2);
+        final int sx = (int) interpolate(pa.getX(), pb.getX(), gradient1);
+        final int ex = (int) interpolate(pc.getX(), pd.getX(), gradient2);
 
-        for (int x = sx; x < ex; x++){
+        final int xStart = Math.max(sx, 0);
+        final int xEnd = Math.min(ex, frameWidth);
+
+        for (int x = xStart; x < xEnd; x++){
 
             double gradient = (x - sx) / (double) (ex - sx);
             double u = interpolate(su, eu, gradient);
@@ -282,8 +287,10 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
                 vertices[i] = transformationMatrix.multiplyByVector(vertices[i]);
                 Vec3 projectionVector = projectionMatrix.multiplyByVector(vertices[i]);
 
-                double xProjection = (projectionVector.getX() / projectionVector.getW() * frameWidth /2) + frameWidth /2;
-                double yProjection = (projectionVector.getY() / projectionVector.getW() * frameHeight /2) + frameHeight /2;
+                double xProjection = (projectionVector.getX() / projectionVector.getW()
+                                   * frameWidth /2) + frameWidth /2;
+                double yProjection = (projectionVector.getY() / projectionVector.getW()
+                                   * frameHeight /2) + frameHeight /2;
 
                 Vec2 projectedVertex = new Vec2(xProjection, yProjection, projectionVector.getW());
                 meshes.get(mesh)[i] = projectedVertex;
