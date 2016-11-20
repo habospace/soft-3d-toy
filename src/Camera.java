@@ -1,88 +1,88 @@
-public class Camera {
-
-    private double Xrotation;
-    private double Yrotation;
+class Camera {
+    //
+    private double xRotation;
+    private double yRotation;
     private double forward;
-    private double sideward;
+    private double sideWard;
 
-    Camera(double xrot,
-           double yrot,
+    Camera(double xRot,
+           double yRot,
            double forward,
-           double sideward) {
-        this.Xrotation = xrot;
-        this.Yrotation = yrot;
+           double sideWard) {
+        this.xRotation = xRot;
+        this.yRotation = yRot;
         this.forward = forward;
-        this.sideward = sideward;
+        this.sideWard = sideWard;
     }
 
     Camera() {
-        this.Xrotation = 0;
-        this.Yrotation = 0;
+        this.xRotation = 0;
+        this.yRotation = 0;
         this.forward = 0;
-        this.sideward = 0;
+        this.sideWard = 0;
     }
 
-    public void rotateXaxisAtPositive() {
-        Xrotation = 1;
+    void rotateXAxisAtPositive() {
+        xRotation = 1;
     }
 
-    public  void rotateXaxisAtNegative() {
-        Xrotation = -1;
+    void rotateXAxisAtNegative() {
+        xRotation = -1;
     }
 
-    public void rotateYaxisAtPositive() {
-        Yrotation = 1;
+    void rotateYAxisAtPositive() {
+        yRotation = 1;
     }
 
-    public void rotateYaxisAtNegative () {
-        Yrotation = -1;
+    void rotateYAxisAtNegative() {
+        yRotation = -1;
     }
 
-    public void moveForward() {
+    void moveForward() {
         forward = -1;
     }
 
-    public  void moveBackward() {
+    void moveBackward() {
         forward = 1;
     }
 
-    public void moveRight() {
-        sideward = 1;
+    void moveRight() {
+        sideWard = 1;
     }
 
-    public void moveLeft() {
-        sideward = -1;
+    void moveLeft() {
+        sideWard = -1;
     }
 
-    public void setBackXrotation() {
-        Xrotation = 0;
+    void setBackXRotation() {
+        xRotation = 0;
     }
 
-    public void setBackYRotation() {
-        Yrotation = 0;
+    void setBackYRotation() {
+        yRotation = 0;
     }
 
-    public void setBackForwardMovement() {
+    void setBackForwardMovement() {
         forward = 0;
     }
 
-    public void setBackSidewardMovement() {
-        sideward = 0;
+    void setBackSideWardMovement() {
+        sideWard = 0;
     }
 
-    public double getXrotation() {
-        return Xrotation;
+    double getXRotation() {
+        return xRotation;
     }
 
-    public double getYrotation() {
-        return Yrotation;
+    double getYRotation() {
+        return yRotation;
     }
 
-    public double getForwardMovement() {
+    double getForwardMovement() {
         return forward;
     }
 
-    public double getSidewardMovement() {
-        return sideward;
+    double getSideWardMovement() {
+        return sideWard;
     }
 }

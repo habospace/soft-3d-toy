@@ -1,19 +1,24 @@
-public class Mesh {
+import java.util.ArrayList;
 
-    private final int verticescount;
+class Mesh {
+
+    private final int verticesCount;
     private final Vec3[] vertices;
-    private final Triangle[] faces;
+    private final ArrayList<Pair<Triple<Integer>, Triple<Vec2>>> faces;
+    private final Texture texture;
 
-    public Mesh(int verticescount) {
-        this.verticescount = verticescount;
-        this.vertices = new Vec3[verticescount];
-        this.faces = new Triangle[calculateMaximumLines(verticescount)];
+    Mesh(int verticesCount, Texture texture) {
+        this.verticesCount = verticesCount;
+        this.vertices = new Vec3[verticesCount];
+        this.faces = new ArrayList<>();
+        this.texture = texture;
     }
 
-    public Mesh() {
-        this.verticescount = 8;
-        this.vertices = new Vec3[verticescount];
-        this.faces = new Triangle[12];
+    Mesh() {
+        this.verticesCount = 8;
+        this.vertices = new Vec3[verticesCount];
+        this.faces = new ArrayList<>();
+        this.texture = new Texture("resources\\SELMECZI-GABRIELLA.jpg");
         addVertex(new Vec3(5, -5, -50), 0);
         addVertex(new Vec3(-5, -5, -50), 1);
         addVertex(new Vec3(-5, 5, -50), 2);
@@ -22,61 +27,63 @@ public class Mesh {
         addVertex(new Vec3(-5, -5, -60), 5);
         addVertex(new Vec3(-5, 5, -60), 6);
         addVertex(new Vec3(5, 5, -60), 7);
-        addFace(new Triangle<>(1, 0, 2), 0);
-        addFace(new Triangle<>(0, 3, 2), 1);
-        addFace(new Triangle<>(4, 5, 6), 2);
-        addFace(new Triangle<>(4, 6, 7), 3);
-        addFace(new Triangle<>(3, 7, 2), 4);
-        addFace(new Triangle<>(2, 7, 6), 5);
-        addFace(new Triangle<>(0, 1, 4), 6);
-        addFace(new Triangle<>(1, 5, 4), 7);
-        addFace(new Triangle<>(4, 7, 0), 8);
-        addFace(new Triangle<>(0, 7, 3), 9);
-        addFace(new Triangle<>(1, 2, 6), 10);
-        addFace(new Triangle<>(5, 1, 6), 11);
+        addFace(new Pair<>(new Triple<>(1, 0, 2),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 1),  new Vec2(0, 0))), 0);
+        addFace(new Pair<>(new Triple<>(0, 3, 2),
+                new Triple<>(new Vec2(1, 1),  new Vec2(1, 0),  new Vec2(0, 0))), 1);
+        addFace(new Pair<>(new Triple<>(4, 5, 6),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 1),  new Vec2(1, 0))), 2);
+        addFace(new Pair<>(new Triple<>(4, 6, 7),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 0),  new Vec2(0, 0))), 3);
+        addFace(new Pair<>(new Triple<>(3, 7, 2),
+                new Triple<>(new Vec2(1, 1),  new Vec2(1, 0),  new Vec2(0, 1))), 4);
+        addFace(new Pair<>(new Triple<>(2, 7, 6),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 0),  new Vec2(0, 0))), 5);
+        addFace(new Pair<>(new Triple<>(0, 1, 4),
+                new Triple<>(new Vec2(1, 0),  new Vec2(0, 0),  new Vec2(1, 1))), 6);
+        addFace(new Pair<>(new Triple<>(1, 5, 4),
+                new Triple<>(new Vec2(0, 0),  new Vec2(0, 1),  new Vec2(1, 1))), 7);
+        addFace(new Pair<>(new Triple<>(4, 7, 0),
+                new Triple<>(new Vec2(1, 1),  new Vec2(1, 0),  new Vec2(0, 1))), 8);
+        addFace(new Pair<>(new Triple<>(0, 7, 3),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 0),  new Vec2(0, 0))), 9);
+        addFace(new Pair<>(new Triple<>(1, 2, 6),
+                new Triple<>(new Vec2(1, 1),  new Vec2(1, 0),  new Vec2(0, 0))), 10);
+        addFace(new Pair<>(new Triple<>(5, 1, 6),
+                new Triple<>(new Vec2(0, 1),  new Vec2(1, 1),  new Vec2(0, 0))), 11);
     }
 
-    private int calculateMaximumLines(int verticescount) {
-        return (verticescount*(verticescount -1))/2;
+    Texture getTexture () {
+        return texture;
     }
 
-    public void addVertex(Vec3 vertex, int index) {
-        try {
-            vertices[index] = vertex;
-        }
-        catch (ArrayIndexOutOfBoundsException error) {
-            System.out.println("Exception thrown at: "+error);
-        }
+    void addVertex(Vec3 vertex, int index) {
+        vertices[index] = vertex;
     }
 
-    public void addFace(Triangle face, int index) {
-        try {
-            faces[index] = face;
-        }
-        catch (ArrayIndexOutOfBoundsException error) {
-            System.out.println("Exception thrown at: "+error);
+    void addFace(Pair<Triple<Integer>, Triple<Vec2>> face, int index) {
+        faces.add(index, face);
+    }
+
+    void move(Matrix3X3 matrix) {
+        for(int i = 0; i < verticesCount; i++){
+            vertices[i] = vertices[i].multiplyByMatrix(matrix);
         }
     }
 
-    public void move(Matrix3X3 matrix) {
-        for(int i = 0; i < verticescount; i++){
-           vertices[i] = vertices[i].multiplyByMatrix(matrix);
-        }
-    }
-
-    public Vec3[] getVertices() {
+    Vec3[] getVertices() {
         return vertices;
     }
 
-    public Vec3 getVertex(int index) {
+    Vec3 getVertex(int index) {
         return vertices[index];
     }
 
-    public int getVerticesCount() {
-        return verticescount;
+    int getVerticesCount() {
+        return verticesCount;
     }
 
-    public Triangle[] getFaces() {
-        return  faces;
+    ArrayList<Pair<Triple<Integer>, Triple<Vec2>>> getFaces() {
+        return faces;
     }
 }

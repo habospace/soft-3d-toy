@@ -1,113 +1,113 @@
 import  java.lang.Math;
 
-public class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
+class Vec3 implements Vec <Vec3>, MultipliableByMatrix<Vec3, Matrix3X3> {
 
     private final static double index = 1;
-    private final double X;
-    private final double Y;
-    private final double Z;
-    private final double W;
+    private final double x;
+    private final double y;
+    private final double z;
+    private final double w;
 
-    public Vec3(double x,
-                double y,
-                double z) {
-        this.X = x;
-        this.Y = y;
-        this.Z = z;
-        this.W = index;
+    Vec3(double x,
+         double y,
+         double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = index;
     }
 
-    public Vec3(double x,
-                double y,
-                double z,
-                double w) {
-        this.X = x;
-        this.Y = y;
-        this.Z = z;
-        this.W = w;
+    Vec3(double x,
+         double y,
+         double z,
+         double w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 
-    public Vec3 crossProduct(Vec3 vec) {
-        return new Vec3(Y * vec.getZ() - Z * vec.getY(),
-                        Z * vec.getX() - X * vec.getZ(),
-                        X * vec.getY() - Y * vec.getX());
+    private Vec3 crossProduct(Vec3 vec) {
+        return new Vec3(y * vec.getZ() - z * vec.getY(),
+                z * vec.getX() - x * vec.getZ(),
+                x * vec.getY() - y * vec.getX());
     }
 
     @Override
     public Vec3 addVector(Vec3 vec) {
-        return new Vec3(X + vec.getX(),
-                        Y + vec.getY(),
-                        Z + vec.getZ());
+        return new Vec3(x + vec.getX(),
+                y + vec.getY(),
+                z + vec.getZ());
     }
 
     @Override
     public Vec3 normalize() {
         double magnitude = length();
-        return new Vec3(X/magnitude,
-                        Y/magnitude,
-                        Z/magnitude);
+        return new Vec3(x /magnitude,
+                y /magnitude,
+                z /magnitude);
     }
 
     @Override
     public double dotProduct (Vec3 vec) {
-        return (X*vec.getX() + Y*vec.getY() + Z*vec.getZ());
+        return (x *vec.getX() + y *vec.getY() + z *vec.getZ());
     }
 
     @Override
     public double length() {
-        return Math.sqrt((X*X)+(Y*Y)+(Z*Z));
+        return Math.sqrt((x * x)+(y * y)+(z * z));
     }
 
     @Override
-    public Vec3 multiplyByMatrix(Matrix3X3 transmat) {
-        double[][] matrix = transmat.getMatrix();
-        double[] multipliedvector = new double[Matrix3X3.matrixheight];
-        for (int i = 0; i < Matrix3X3.matrixheight; i++){
-            double v0 = matrix[i][0] * X;
-            double v1 = matrix[i][1] * Y;
-            double v2 = matrix[i][2] * Z;
-            double v3 = matrix[i][3] * W;
-            multipliedvector[i] = v0 + v1 + v2 + v3;
+    public Vec3 multiplyByMatrix(Matrix3X3 transMatrix) {
+        double[][] matrix = transMatrix.getMatrix();
+        double[] multipliedVector = new double[Matrix3X3.matrixHeight];
+        for (int i = 0; i < Matrix3X3.matrixHeight; i++){
+            double v0 = matrix[i][0] * x;
+            double v1 = matrix[i][1] * y;
+            double v2 = matrix[i][2] * z;
+            double v3 = matrix[i][3] * w;
+            multipliedVector[i] = v0 + v1 + v2 + v3;
         }
-        return new Vec3(multipliedvector[0],
-                        multipliedvector[1],
-                        multipliedvector[2],
-                        multipliedvector[3]);
+        return new Vec3(multipliedVector[0],
+                multipliedVector[1],
+                multipliedVector[2],
+                multipliedVector[3]);
     }
 
-    public static Vec3 surfaceNormalVector(Vec3 vertex1,
-                                           Vec3 vertex2,
-                                           Vec3 vertex3) {
+    static Vec3 surfaceNormalVector(Vec3 vertex1,
+                                    Vec3 vertex2,
+                                    Vec3 vertex3) {
         Vec3 side1 = new Vec3(vertex2.getX() - vertex1.getX(),
-                              vertex2.getY() - vertex1.getY(),
-                              vertex2.getZ() - vertex1.getZ());
+                vertex2.getY() - vertex1.getY(),
+                vertex2.getZ() - vertex1.getZ());
         Vec3 side2 = new Vec3(vertex3.getX() - vertex1.getX(),
-                              vertex3.getY() - vertex1.getY(),
-                              vertex3.getZ() - vertex1.getZ());
+                vertex3.getY() - vertex1.getY(),
+                vertex3.getZ() - vertex1.getZ());
 
         return side1.crossProduct(side2);
     }
 
-    public double getX() {
-        return X;
+    double getX() {
+        return x;
     }
 
-    public double getY() {
-        return Y;
+    double getY() {
+        return y;
     }
 
-    public double getZ() {
-        return Z;
+    double getZ() {
+        return z;
     }
 
-    public double getW() {
-        return W;
+    double getW() {
+        return w;
     }
 
-    public void print(){
-        System.out.println("X = "+X);
-        System.out.println("Y = "+Y);
-        System.out.println("Z = "+Z);
-        System.out.println("W = "+W);
+    void print(){
+        System.out.println("x = "+ x);
+        System.out.println("y = "+ y);
+        System.out.println("z = "+ z);
+        System.out.println("w = "+ w);
     }
 }

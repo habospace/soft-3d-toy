@@ -1,8 +1,8 @@
 import java.lang.Math;
 
-public class YaxisRotationMatrix extends Matrix3X3 {
+class yAxisRotationMatrix extends Matrix3X3 {
 
-    public YaxisRotationMatrix(double theta) {
+    yAxisRotationMatrix(double theta) {
         makeMatrix(theta);
     }
 

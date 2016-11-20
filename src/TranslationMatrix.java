@@ -1,9 +1,9 @@
-public class TranslationMatrix extends Matrix3X3 {
+class TranslationMatrix extends Matrix3X3 {
 
 
-    public TranslationMatrix(double deltaX,
-                             double deltaY,
-                             double deltaZ) {
+    TranslationMatrix(double deltaX,
+                      double deltaY,
+                      double deltaZ) {
         makeMatrix(deltaX, deltaY, deltaZ);
     }
 

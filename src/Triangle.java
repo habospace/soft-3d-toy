@@ -1,49 +1,52 @@
-public class Triangle <T> implements Comparable<Triangle> {
+class Triangle implements Comparable<Triangle> {
 
-    private final T vertex1;
-    private final T vertex2;
-    private final T vertex3;
-    private double centreZDepth;
-    private int colorCode;
+    private final ProjectedPoint point1;
+    private final ProjectedPoint point2;
+    private final ProjectedPoint point3;
+    private final double centreZDepth;
+    private final double shading;
+    private final Texture texture;
 
-    public Triangle(T vertex1,
-                    T vertex2,
-                    T vertex3) {
-        this.vertex1 = vertex1;
-        this.vertex2 = vertex2;
-        this.vertex3 = vertex3;
+    Triangle (ProjectedPoint p1,
+              ProjectedPoint p2,
+              ProjectedPoint p3,
+              double centreZDepth,
+              double shading,
+              Texture texture) {
+        this.point1 = p1;
+        this.point2 = p2;
+        this.point3 = p3;
+        this.centreZDepth = centreZDepth;
+        this.shading = shading;
+        this.texture = texture;
     }
 
-    public T getVertex1() {
-        return vertex1;
+    ProjectedPoint getPoint1 () {
+        return point1;
     }
 
-    public T getVertex2() {
-        return vertex2;
+    ProjectedPoint getPoint2 () {
+        return point2;
     }
 
-    public T getVertex3() {
-        return vertex3;
+    ProjectedPoint getPoint3 () {
+        return point3;
     }
 
-    public void setCentreZDepth(double z) {
-        centreZDepth = z;
-    }
-
-    public double getCentreZDepth() {
+    private double getCentreZDepth () {
         return  centreZDepth;
     }
 
-    public void setColorCode(int code) {
-        colorCode = code;
+    double getShading () {
+        return shading;
     }
 
-    public int getColorCode() {
-        return colorCode;
+    Texture getTexture () {
+        return texture;
     }
 
     @Override
-    public int compareTo(Triangle other) {
+    public int compareTo (Triangle other) {
         double compareDepth = other.getCentreZDepth();
         if (compareDepth == centreZDepth){
             return 1;

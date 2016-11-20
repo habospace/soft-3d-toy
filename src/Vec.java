@@ -1,10 +1,10 @@
-public interface Vec<V>{
+interface Vec<V>{
 
-    public V addVector(V other);
+    V addVector(V other);
 
-    public double dotProduct(V other);
+    double dotProduct(V other);
 
-    public V normalize();
+    V normalize();
 
-    public double length();
+    double length();
 }

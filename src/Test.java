@@ -3,6 +3,7 @@ import java.lang.Math;
 public class Test {
 
     public static void main (String[] args) {
+        /**
 
         Mesh cube = new Mesh(8);
         cube.addVertex(new Vec3(-1, 1, 1), 0);
@@ -80,6 +81,6 @@ public class Test {
             Vec3 p3 = vertices[(int)face.getVertex3()];
             Vec3 surfacenormal = Vec3.surfaceNormalVector(p1, p2, p3);
             System.out.println(i+"  "+surfacenormal.length());
+         */
         }
-    }
 }

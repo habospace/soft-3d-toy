@@ -1,64 +1,64 @@
 import java.lang.Math;
 
-public class Vec2 implements Vec<Vec2> {
+class Vec2 implements Vec<Vec2> {
 
     private final static double index = 1;
-    private final double X;
-    private final double Y;
-    private final double W;
+    private final double x;
+    private final double y;
+    private final double w;
 
-    public Vec2(double x,
-                double y) {
-        this.X = x;
-        this.Y = y;
-        this.W = index;
+    Vec2(double x,
+         double y) {
+        this.x = x;
+        this.y = y;
+        this.w = index;
     }
 
-    public Vec2(double x,
-                double y,
-                double w) {
-        this.X = x;
-        this.Y = y;
-        this.W = w;
+    Vec2(double x,
+         double y,
+         double w) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
     }
 
     @Override
     public Vec2 addVector(Vec2 vec) {
-        return new Vec2(X + vec.getX(),
-                        Y + vec.getY());
+        return new Vec2(x + vec.getX(),
+                y + vec.getY());
     }
 
     @Override
     public Vec2 normalize() {
         double magnitude = length();
-        return new Vec2(X/magnitude, Y/magnitude);
+        return new Vec2(x /magnitude, y /magnitude);
     }
 
     @Override
     public double dotProduct(Vec2 vec) {
-        return (X*vec.getX() + Y*vec.getY());
+        return (x *vec.getX() + y *vec.getY());
     }
 
     @Override
     public double length() {
-        return Math.sqrt((Y*Y) + (X*X));
+        return Math.sqrt((y * y) + (x * x));
     }
 
-    public double getX() {
-        return X;
+    double getX() {
+        return x;
     }
 
-    public double getY() {
-        return Y;
+    double getY() {
+        return y;
     }
 
-    public double getW() {
-        return W;
+    double getW() {
+        return w;
     }
 
     public void print() {
-        System.out.println("X = "+X);
-        System.out.println("Y = "+Y);
-        System.out.println("W = "+W);
+        System.out.println("x = "+ x);
+        System.out.println("y = "+ y);
+        System.out.println("w = "+ w);
     }
 }
