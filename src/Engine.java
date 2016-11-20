@@ -318,58 +318,64 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed (KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_W){
-            camera.moveForward();
-        }
-        if (key == KeyEvent.VK_S){
-            camera.moveBackward();
-        }
-        if (key == KeyEvent.VK_D){
-            camera.moveRight();
-        }
-        if (key == KeyEvent.VK_A){
-            camera.moveLeft();
-        }
-        if (key == KeyEvent.VK_L){
-            camera.rotateYAxisAtPositive();
-        }
-        if (key == KeyEvent.VK_J){
-            camera.rotateXAxisAtPositive();
-        }
-        if (key == KeyEvent.VK_K){
-            camera.rotateXAxisAtNegative();
-        }
-        if (key == KeyEvent.VK_H){
-            camera.rotateYAxisAtNegative();
+
+        switch (key) {
+            case KeyEvent.VK_W:
+                camera.moveForward();
+                break;
+            case KeyEvent.VK_S:
+                camera.moveBackward();
+                break;
+            case KeyEvent.VK_D:
+                camera.moveRight();
+                break;
+            case KeyEvent.VK_A:
+                camera.moveLeft();
+                break;
+            case KeyEvent.VK_L:
+                camera.rotateYAxisAtPositive();
+                break;
+            case KeyEvent.VK_J:
+                camera.rotateXAxisAtPositive();
+                break;
+            case KeyEvent.VK_K:
+                camera.rotateXAxisAtNegative();
+                break;
+            case KeyEvent.VK_H:
+                camera.rotateYAxisAtNegative();
+                break;
         }
     }
 
     @Override
     public void keyReleased (KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_W){
-            camera.setBackForwardMovement();
-        }
-        if (key == KeyEvent.VK_S){
-            camera.setBackForwardMovement();
-        }
-        if (key == KeyEvent.VK_D){
-            camera.setBackSideWardMovement();
-        }
-        if (key == KeyEvent.VK_A){
-            camera.setBackSideWardMovement();
-        }
-        if (key == KeyEvent.VK_L){
-            camera.setBackYRotation();
-        }
-        if (key == KeyEvent.VK_J){
-            camera.setBackXRotation();
-        }
-        if (key == KeyEvent.VK_K){
-            camera.setBackXRotation();
-        }
-        if (key == KeyEvent.VK_H){
-            camera.setBackYRotation();
+
+        switch (key) {
+            case KeyEvent.VK_W:
+                camera.setBackForwardMovement();
+                break;
+            case KeyEvent.VK_S:
+                camera.setBackForwardMovement();
+                break;
+            case KeyEvent.VK_D:
+                camera.setBackSideWardMovement();
+                break;
+            case KeyEvent.VK_A:
+                camera.setBackSideWardMovement();
+                break;
+            case KeyEvent.VK_L:
+                camera.setBackYRotation();
+                break;
+            case KeyEvent.VK_J:
+                camera.setBackXRotation();
+                break;
+            case KeyEvent.VK_K:
+                camera.setBackXRotation();
+                break;
+            case KeyEvent.VK_H:
+                camera.setBackYRotation();
+                break;
         }
     }
 
