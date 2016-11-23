@@ -390,7 +390,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
     public static void main (String[] args) {
         System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         Camera camera = new Camera();
-        Engine engine = new Engine(camera, 20, 500, 500);
+        Engine engine = new Engine(camera, 20, 700, 700);
         Mesh mesh1 = new Mesh();
         engine.addMesh(mesh1);
 
@@ -426,7 +426,7 @@ public class  Engine extends JPanel implements ActionListener, KeyListener {
 
         }
         SwingUtilities.invokeLater(() -> {
-            new Frame (500, 500, "soft 3D engine", engine) {
+            new Frame (700, 700, "soft 3D engine", engine) {
 
             };  // Let the constructor do the job
         });
