@@ -1,4 +1,4 @@
-#Soft-3d-toy:
+Soft-3d-toy:
 
 This is a Java based 3d engine. It is called 'soft', thus it runs on CPU, which also means
 that it's generally much slower than if it was built for GPU.
