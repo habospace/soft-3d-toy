@@ -14,8 +14,7 @@ Java project) as well as for learning about 3d programming techniques such as:
   - surface normal vector based shading
   - depth buffering techniques (I am using the combination of painter's algorithm and backface culling)
 
-You can check the engine in operation here:
-
+### You can check the engine in operation here:
 
 [![soft 3D engine test](https://i.ytimg.com/vi/95vz5KIjtyE/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAJ13DWIpRWuEi44IFfbvJwbCKIzA)](https://www.youtube.com/watch?v=KOxbO0EI4MA "soft 3D engine test")
 
