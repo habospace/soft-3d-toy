@@ -1,9 +1,9 @@
 # Soft-3d-toy:
 
-This is a soft 3d engine written in Java. It is called 'soft', which means that it runs on the PU, 
+This is a soft 3d engine written in Java. It is called 'soft' which means that it runs on the CPU, 
 which also means that it's much slower than engines that take advantage of the GPU.
 
-The project was made to learn about Java programming (this is in fact my first larger
+The project was made to learn about Java programming (this is in fact my firstlarger
 Java project) as well as for learning about 3d programming techniques such as:
 
   - **computational matrix multiplication & arithmetics**
@@ -40,8 +40,7 @@ The repository has the following structure:
   ⌊ YaxisRotationMatrix.java
 ```
 
-The [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file contains the main logic of the 3d engine such as the 3d -> 2d projections
-and drawing logics. The rest of the modules contain utility classes that represent entities 
+The [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file contains the main logic of the 3d engine such as the 3d -> 2d projections and drawing logics. The rest of the modules contain utility classes that represent entities 
 such as triangles, points, meshes, textures (and so on...) used in the [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file.
 
 ### You can check out the engine in operation here:
