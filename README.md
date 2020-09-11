@@ -44,7 +44,7 @@ The **src/Engine.java** file contains the main logic of the 3d engine such as th
 and drawing logics. The rest of the modules contain utility classes that represent entities 
 such as triangles, points, meshes, textures (and so on...) used in the **src/Engine.java** file.
 
-### You can check the engine in operation here:
+### You can check out the engine in operation here:
 
 [![soft 3D engine test](https://i.ytimg.com/vi/95vz5KIjtyE/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAJ13DWIpRWuEi44IFfbvJwbCKIzA)](https://www.youtube.com/watch?v=95vz5KIjtyE "soft 3D engine test")
 
