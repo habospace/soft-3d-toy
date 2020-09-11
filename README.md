@@ -40,9 +40,9 @@ The repository has the following structure:
   ⌊ YaxisRotationMatrix.java
 ```
 
-The **src/Engine.java** file contains the main logic of the 3d engine such as the 3d -> 2d projections
+The [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file contains the main logic of the 3d engine such as the 3d -> 2d projections
 and drawing logics. The rest of the modules contain utility classes that represent entities 
-such as triangles, points, meshes, textures (and so on...) used in the **src/Engine.java** file.
+such as triangles, points, meshes, textures (and so on...) used in the [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file.
 
 ### You can check out the engine in operation here:
 
