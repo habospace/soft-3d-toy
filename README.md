@@ -1,47 +1,16 @@
 # Soft-3d-toy:
 
-This is a soft 3d engine written in Java. It is called 'soft' which means that it runs on the CPU, 
-which also means that it's much slower than engines that take advantage of the GPU.
+This is a soft 3d engine written in Java.
 
-The project was made to learn about Java programming (this is in fact my firstlarger
-Java project) as well as for learning about 3d programming techniques such as:
+The project was made to learn about Java Programming as well as learn the basics of a 3d engine:
 
-  - **computational matrix multiplication & arithmetics**
-  - **3d projection arithmetics**
-  - **object triangulation techniques**
-  - **triangle rasterization**
-  - **texture mapping to surfaces**
-  - **surface normal vector based shading**
-  - **depth buffering techniques (I am using the combination of painter's algorithm and backface culling)**
+  - Matrix projections
+  - triangle rasterization
+  - texture mapping to surfaces
+  - surface normal vector based shading
+  - depth buffering techniques (painter's algorithm and backface culling)
 
 The repository has the following structure:
-
-```
-├ resources/
-  ⌊ SELMECZI-GABRIELLA.jpg
-⌊ src/
-  ├ Camera.java
-  ├ Engine.java
-  ├ Matrix3X3.java
-  ├ Mesh.java
-  ├ MultipliableByMatrix.java
-  ├ MultipliableByvectpr.java
-  ├ Pair.java
-  ├ ProjectedPoint.java
-  ├ ProjectionMatrix.java
-  ├ Test.java
-  ├ Textrure.java
-  ├ TranslationMatrix.java
-  ├ Triangle.java
-  ├ Triple.java
-  ├ Vec2.java
-  ├ Vec3.java
-  ├ XaxisRotationMatrix.java
-  ⌊ YaxisRotationMatrix.java
-```
-
-The [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file contains the main logic of the 3d engine such as the 3d -> 2d projections and drawing logics. The rest of the modules contain utility classes that represent entities 
-such as triangles, points, meshes, textures (and so on...) used in the [src/Engine.java](https://github.com/habospace/soft-3d-toy/blob/master/src/Engine.java) file.
 
 ### You can check out the engine in operation here:
 
